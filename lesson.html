@@ -964,16 +964,19 @@
                     <div class="chat-card fade-in">
                         <div class="chat-header">
                             <div class="chat-icon">🤖</div>
-                            <h3 class="chat-title">AI Assistant</h3>
+                            <h3 class="chat-title">EurekAI</h3>
                         </div>
                         
                         <div id="chatMessages" class="chat-messages">
-                            <!-- Welcome message -->
-                            <div class="chat-message ai">
+                            <!-- Loading indicator for welcome message -->
+                            <div class="chat-message ai" id="welcomeLoader">
                                 <div class="message-avatar ai">🤖</div>
-                                <div class="message-content ai">
-                                    Hi! I'm your AI learning assistant. Ask me anything about this lesson or financial literacy topics!
-                                    <div class="message-time" id="welcomeTime"></div>
+                                <div class="typing-indicator">
+                                    <div class="typing-dots">
+                                        <div class="typing-dot"></div>
+                                        <div class="typing-dot"></div>
+                                        <div class="typing-dot"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1376,42 +1379,117 @@
             showTypingIndicator();
             
             try {
-                // TODO: Replace with actual API call when backend is ready
-                // const response = await fetch(`${API_BASE_URL}/chat`, {
-                //     method: 'POST',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //     },
-                //     body: JSON.stringify({
-                //         message: message,
-                //         lessonId: getLessonId(),
-                //         userId: user.id
-                //     })
-                // });
+                const lessonId = getLessonId();
+                console.log('🤖 Sending message to AI API:', message, 'for lesson:', lessonId);
                 
-                // Simulate API delay
-                await new Promise(resolve => setTimeout(resolve, 1500 + Math.random() * 1000));
+                const response = await fetch(`${API_BASE_URL}/lessons/${lessonId}/ai`, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: message
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const aiResponse = await response.json();
+                console.log('✅ AI response received:', aiResponse);
+                console.log('Response keys:', Object.keys(aiResponse));
                 
                 // Hide typing indicator
                 hideTypingIndicator();
                 
-                // Add AI response (placeholder)
-                const responses = [
-                    "Excellent question! This relates directly to the lesson material.",
-                    "I'm here to help clarify that for you. Let me explain:",
-                    "That's an important aspect of financial literacy. Here's my take:"
-                ];
+                // Add AI response - handle different possible response formats
+                let responseText;
+                if (typeof aiResponse === 'string') {
+                    responseText = aiResponse;
+                } else if (aiResponse.response) {
+                    responseText = aiResponse.response;
+                } else if (aiResponse.message) {
+                    responseText = aiResponse.message;
+                } else if (aiResponse.data) {
+                    responseText = aiResponse.data;
+                } else {
+                    // If it's an object, try to get the first string value
+                    const values = Object.values(aiResponse);
+                    responseText = values.find(val => typeof val === 'string') || "I received your message but couldn't generate a proper response.";
+                }
                 
-                const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                addMessage(randomResponse);
+                addMessage(responseText);
                 
             } catch (error) {
-                console.error('Error sending message:', error);
+                console.error('❌ Error sending message:', error);
                 hideTypingIndicator();
                 addMessage("I'm sorry, I'm having trouble responding right now. Please try again later.");
             } finally {
                 chatSendBtn.disabled = false;
                 chatInput.focus();
+            }
+        }
+        
+        // Load welcome message from AI
+        async function loadWelcomeMessage() {
+            try {
+                const lessonId = getLessonId();
+                console.log('🤖 Loading welcome message from AI API for lesson:', lessonId);
+                
+                const response = await fetch(`${API_BASE_URL}/lessons/${lessonId}/ai`, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        prompt: "Predstavi se korisniku, reci ko si i koja je tvoja svrha."
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const aiResponse = await response.json();
+                console.log('✅ Welcome message received:', aiResponse);
+                
+                // Add AI welcome message
+                let responseText;
+                if (typeof aiResponse === 'string') {
+                    responseText = aiResponse;
+                } else if (aiResponse.response) {
+                    responseText = aiResponse.response;
+                } else if (aiResponse.message) {
+                    responseText = aiResponse.message;
+                } else if (aiResponse.data) {
+                    responseText = aiResponse.data;
+                } else {
+                    const values = Object.values(aiResponse);
+                    responseText = values.find(val => typeof val === 'string') || "Zdravo! Ja sam tvoj AI asistent za učenje.";
+                }
+                
+                // Remove loading indicator
+                const welcomeLoader = document.getElementById('welcomeLoader');
+                if (welcomeLoader) {
+                    welcomeLoader.remove();
+                }
+                
+                addMessage(responseText, false);
+                
+            } catch (error) {
+                console.error('❌ Error loading welcome message:', error);
+                
+                // Remove loading indicator
+                const welcomeLoader = document.getElementById('welcomeLoader');
+                if (welcomeLoader) {
+                    welcomeLoader.remove();
+                }
+                
+                // Fallback welcome message
+                addMessage("Zdravo! Ja sam tvoj AI asistent za učenje. Pitaj me šta god želiš o ovoj lekciji!", false);
             }
         }
         
@@ -1435,9 +1513,6 @@
                     sendMessage();
                 }
             });
-            
-            // Set welcome message time
-            document.getElementById('welcomeTime').textContent = formatTime();
         }
         
         // Initialize page
@@ -1455,6 +1530,9 @@
             
             // Initialize chat
             setupChatInput();
+            
+            // Load AI welcome message
+            loadWelcomeMessage();
             
             // Header scroll effect
             let lastScrollTop = 0;
