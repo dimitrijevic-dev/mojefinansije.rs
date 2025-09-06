@@ -856,7 +856,6 @@
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Preskoči na glavni sadržaj</a>
     
     <!-- Header -->
     <header class="header">
@@ -913,7 +912,8 @@
                     </div>
                     
                     <div class="lesson-actions">
-                        <a href="#" class="btn-lesson-secondary" id="nextLessonButton">Sledeća lekcija</a>
+                        <a href="#" class="btn-lesson-secondary" id="flashcardsButton">Vežbaj sa karticama</a>
+                        <a href="#" class="btn-lesson-primary" id="nextLessonButton">Sledeća lekcija</a>
                     </div>
                 </div>
                 
@@ -1132,13 +1132,18 @@
         // Update Next Lesson button URL
         function updateNextLessonButton(currentLessonId) {
             const nextLessonButton = document.getElementById('nextLessonButton');
+            const flashcardsButton = document.getElementById('flashcardsButton');
             const currentId = parseInt(currentLessonId);
             const nextLessonId = currentId + 1;
             
             // Update the href to point to the next lesson
             nextLessonButton.href = `lesson.html?id=${nextLessonId}`;
             
+            // Update the href to point to flashcards for current lesson
+            flashcardsButton.href = `flashcards.html?id=${currentLessonId}`;
+            
             console.log(`🔗 Updated Next Lesson button to point to lesson ${nextLessonId}`);
+            console.log(`🃏 Updated Flashcards button to point to flashcards for lesson ${currentLessonId}`);
         }
         
         // Load lesson from API
