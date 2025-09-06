@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CareerLaunch Academy - Master financial literacy for your first job with AI-powered practice and expert-led courses">
+    <meta name="keywords" content="financial literacy, first job, career preparation, budgeting, salary negotiation, personal finance education">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="CareerLaunch Academy - Financial Literacy for Your First Job">
+    <meta property="og:description" content="Get job-ready with financial skills that matter. Learn budgeting, salary negotiation, and money management.">
+    <meta property="og:image" content="https://careerlaunch.academy/og-image.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CareerLaunch Academy - Financial Literacy for Your First Job">
+    <meta name="twitter:description" content="Get job-ready with financial skills that matter. Learn budgeting, salary negotiation, and money management.">
+    <meta name="twitter:image" content="https://careerlaunch.academy/twitter-image.jpg">
+    
+    <title>CareerLaunch Academy - Master Financial Literacy for Your First Job</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables - Apple-Inspired Design System */
+        :root {
+            /* Colors */
+            --mocha-mousse: #A0826D;
+            --system-black: #000000;
+            --system-white: #FFFFFF;
+            --apple-blue: #007AFF;
+            --warm-gray: #8E8E93;
+            --light-gray: #F2F2F7;
+            --success-green: #34C759;
+            --warning-orange: #FF9500;
+            
+            /* Spacing - 8pt Grid */
+            --spacing-micro: 4px;
+            --spacing-small: 8px;
+            --spacing-medium: 16px;
+            --spacing-large: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --spacing-xxxl: 64px;
+            
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            
+            /* Shadows */
+            --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 16px 64px rgba(0, 0, 0, 0.15);
+            
+            /* Border Radius */
+            --radius-small: 8px;
+            --radius-medium: 12px;
+            --radius-large: 16px;
+            --radius-xl: 24px;
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--system-black);
+            background: var(--system-white);
+            overflow-x: hidden;
+        }
+        
+        /* Skip Link for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--system-black);
+            color: var(--system-white);
+            padding: var(--spacing-small);
+            text-decoration: none;
+            z-index: 1000;
+            border-radius: var(--radius-small);
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-large);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--apple-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--system-black);
+            font-weight: 500;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--apple-blue);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--apple-blue);
+            transition: width 0.2s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: var(--spacing-medium);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--system-black);
+            border: 1px solid var(--warm-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            border-color: var(--apple-blue);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--apple-blue), #0056CC);
+            color: var(--system-white);
+            box-shadow: 0 4px 14px rgba(0, 122, 255, 0.25);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+        
+        /* Mobile Navigation */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: var(--spacing-small);
+        }
+        
+        .hamburger {
+            width: 24px;
+            height: 2px;
+            background: var(--system-black);
+            display: block;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger::before,
+        .hamburger::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: var(--system-black);
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger::before {
+            top: -8px;
+        }
+        
+        .hamburger::after {
+            bottom: -8px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="%23007AFF" opacity="0.1"/></svg>') repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-large);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xxxl);
+            align-items: center;
+        }
+        
+        .hero-text h1 {
+            font-size: clamp(48px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--spacing-large);
+            background: linear-gradient(135deg, var(--system-black) 0%, var(--apple-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-text .subtitle {
+            font-size: 20px;
+            color: var(--warm-gray);
+            margin-bottom: var(--spacing-xl);
+            font-weight: 500;
+        }
+        
+        .hero-text .description {
+            font-size: 18px;
+            color: var(--system-black);
+            margin-bottom: var(--spacing-xl);
+            opacity: 0.8;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--apple-blue);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--warm-gray);
+            font-weight: 500;
+        }
+        
+        .hero-cta {
+            display: flex;
+            gap: var(--spacing-medium);
+            flex-wrap: wrap;
+        }
+        
+        .btn-hero-primary {
+            background: linear-gradient(135deg, var(--apple-blue), #0056CC);
+            color: var(--system-white);
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: var(--radius-medium);
+            text-decoration: none;
+            box-shadow: 0 8px 32px rgba(0, 122, 255, 0.25);
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-small);
+        }
+        
+        .btn-hero-primary:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 16px 48px rgba(0, 122, 255, 0.35);
+        }
+        
+        .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            color: var(--system-black);
+            padding: 16px 32px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: var(--radius-medium);
+            text-decoration: none;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+        }
+        
+        .hero-visual {
+            position: relative;
+        }
+        
+        .hero-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-large);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: perspective(1000px) rotateX(5deg) rotateY(-5deg);
+            transition: all 0.3s ease;
+        }
+        
+        .hero-card:hover {
+            transform: perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(-8px);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
+            margin-bottom: var(--spacing-large);
+        }
+        
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--success-green), #28A745);
+            border-radius: var(--radius-medium);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--system-black);
+        }
+        
+        .card-content {
+            space-y: var(--spacing-medium);
+        }
+        
+        .progress-item {
+            margin-bottom: var(--spacing-medium);
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-small);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: var(--light-gray);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-green), var(--apple-blue));
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+        
+        /* Sections */
+        .section {
+            padding: var(--spacing-xxxl) 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xxxl);
+        }
+        
+        .section-title {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 700;
+            margin-bottom: var(--spacing-medium);
+            color: var(--system-black);
+        }
+        
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--warm-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* About Section */
+        .about {
+            background: var(--system-white);
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-xxxl);
+            align-items: center;
+        }
+        
+        .about-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: var(--system-black);
+        }
+        
+        .about-text p {
+            margin-bottom: var(--spacing-large);
+        }
+        
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-large);
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-large);
+            padding: var(--spacing-large);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: var(--shadow-small);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--apple-blue), var(--mocha-mousse));
+            border-radius: var(--radius-small);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--spacing-medium);
+            font-size: 20px;
+        }
+        
+        .feature-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-small);
+            color: var(--system-black);
+        }
+        
+        .feature-description {
+            font-size: 14px;
+            color: var(--warm-gray);
+            line-height: 1.5;
+        }
+        
+        /* Timeline Section */
+        .timeline {
+            background: var(--light-gray);
+        }
+        
+        .timeline-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-item {
+            display: flex;
+            gap: var(--spacing-large);
+            margin-bottom: var(--spacing-xl);
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 23px;
+            top: 48px;
+            width: 2px;
+            height: calc(100% + 32px);
+            background: linear-gradient(to bottom, var(--apple-blue), var(--mocha-mousse));
+        }
+        
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        
+        .timeline-marker {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--apple-blue), var(--mocha-mousse));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--system-white);
+            flex-shrink: 0;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            background: var(--system-white);
+            padding: var(--spacing-large);
+            border-radius: var(--radius-large);
+            box-shadow: var(--shadow-small);
+        }
+        
+        .timeline-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-small);
+            color: var(--system-black);
+        }
+        
+        .timeline-time {
+            font-size: 14px;
+            color: var(--apple-blue);
+            font-weight: 500;
+            margin-bottom: var(--spacing-small);
+        }
+        
+        .timeline-description {
+            font-size: 14px;
+            color: var(--warm-gray);
+            line-height: 1.6;
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--system-black);
+            color: var(--system-white);
+            padding: var(--spacing-xxxl) 0 var(--spacing-large);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-xl);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-medium);
+            color: var(--system-white);
+        }
+        
+        .footer-section p,
+        .footer-section a {
+            color: var(--warm-gray);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+        
+        .footer-section a:hover {
+            color: var(--apple-blue);
+        }
+        
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: var(--spacing-large);
+            text-align: center;
+            color: var(--warm-gray);
+            font-size: 14px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .hero-content,
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-xl);
+            }
+            
+            .hero-visual {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-medium);
+            }
+            
+            .nav {
+                padding: 0 var(--spacing-medium);
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .hero-cta {
+                justify-content: center;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                gap: var(--spacing-medium);
+            }
+            
+            .timeline-item::before {
+                display: none;
+            }
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Focus Indicators */
+        button:focus,
+        a:focus,
+        input:focus {
+            outline: 2px solid var(--apple-blue);
+            outline-offset: 2px;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--system-white);
+            animation: spin 0.8s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="#" class="logo" aria-label="CareerLaunch Academy Home">
+                🎯 CareerLaunch
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#ai-practice">AI Practice</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#testimonials">Success Stories</a></li>
+            </ul>
+            
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-secondary" role="button">Log In</a>
+                <a href="#" class="btn btn-primary" role="button">Register</a>
+            </div>
+            
+            <button class="mobile-menu-toggle" aria-label="Toggle mobile menu">
+                <span class="hamburger"></span>
+            </button>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Hero Section -->
+        <section class="hero" role="banner">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text">
+                        <h1 class="fade-in">Master Money Skills for Your First Job</h1>
+                        <p class="subtitle fade-in">CareerLaunch Academy</p>
+                        <p class="description fade-in">
+                            Get job-ready with essential financial literacy skills. Learn budgeting, salary negotiation, 
+                            and money management through expert-led courses and AI-powered practice sessions.
+                        </p>
+                        
+                        <div class="hero-stats fade-in">
+                            <div class="stat">
+                                <span class="stat-number">15+</span>
+                                <span class="stat-label">Courses</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">AI</span>
+                                <span class="stat-label">Practice</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number">10K+</span>
+                                <span class="stat-label">Students</span>
+                            </div>
+                        </div>
+                        
+                        <div class="hero-cta fade-in">
+                            <a href="#" class="btn-hero-primary" role="button">
+                                🚀 Start Learning
+                            </a>
+                            <a href="#courses" class="btn-hero-secondary" role="button">
+                                Browse Courses
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-visual">
+                        <div class="hero-card">
+                            <div class="card-header">
+                                <div class="card-icon">🎓</div>
+                                <h3 class="card-title">Your Learning Progress</h3>
+                            </div>
+                            <div class="card-content">
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Budget Planning</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Salary Negotiation</span>
+                                        <span>72%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 72%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Interview Prep</span>
+                                        <span>63%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: 63%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Courses Section -->
+        <section id="courses" class="section about">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Master Essential Financial Skills</h2>
+                    <p class="section-subtitle">
+                        Comprehensive courses designed specifically for job seekers and early-career professionals
+                    </p>
+                </div>
+                
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>
+                            Starting your career without financial knowledge is like driving without a map. Our expert-designed 
+                            courses teach you the money skills that matter most in your first job and beyond.
+                        </p>
+                        <p>
+                            From understanding your first paycheck to negotiating salary, budgeting on entry-level income, 
+                            and building emergency funds - we cover everything you need to launch your financial future.
+                        </p>
+                        <p>
+                            Each course combines video lessons, interactive exercises, real-world scenarios, and AI-powered 
+                            practice sessions to ensure you truly understand and can apply what you learn.
+                        </p>
+                    </div>
+                    
+                    <div class="about-features">
+                        <div class="feature-card">
+                            <div class="feature-icon">💰</div>
+                            <h3 class="feature-title">First Paycheck Mastery</h3>
+                            <p class="feature-description">
+                                Understand taxes, deductions, benefits, and how to make the most of your entry-level salary.
+                            </p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🗣️</div>
+                            <h3 class="feature-title">Salary Negotiation</h3>
+                            <p class="feature-description">
+                                Learn proven strategies to negotiate your salary with confidence and secure fair compensation.
+                            </p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3 class="feature-title">Smart Budgeting</h3>
+                            <p class="feature-description">
+                                Create realistic budgets that work with entry-level income and young professional lifestyle.
+                            </p>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-icon">🏦</div>
+                            <h3 class="feature-title">Emergency Fund</h3>
+                            <p class="feature-description">
+                                Build financial security with step-by-step guidance on creating your first emergency fund.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- AI Practice Section -->
+        <section id="ai-practice" class="section timeline">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">AI-Powered Practice Sessions</h2>
+                    <p class="section-subtitle">
+                        Practice real scenarios with our AI coach that adapts to your learning style
+                    </p>
+                </div>
+                
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">🤖</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Salary Negotiation Simulator</h3>
+                            <div class="timeline-time">Practice • Anytime</div>
+                            <p class="timeline-description">
+                                Role-play salary negotiations with our AI that responds like real hiring managers. 
+                                Get instant feedback on your approach, body language analysis, and improvement suggestions.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker">💬</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Interview Financial Questions</h3>
+                            <div class="timeline-time">Interactive • 24/7</div>
+                            <p class="timeline-description">
+                                Practice answering common financial questions in job interviews. Our AI helps you 
+                                craft confident responses about salary expectations, benefits, and career goals.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker">📋</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Budget Challenge Scenarios</h3>
+                            <div class="timeline-time">Challenges • Weekly</div>
+                            <p class="timeline-description">
+                                Solve real-world budgeting challenges based on different salary levels and life situations. 
+                                AI provides personalized feedback and alternative solutions.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker">🎯</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Personalized Learning Path</h3>
+                            <div class="timeline-time">Adaptive • Continuous</div>
+                            <p class="timeline-description">
+                                Our AI tracks your progress and creates a customized learning path. Focus on areas 
+                                where you need more practice while reinforcing your strengths.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-marker">📊</div>
+                        <div class="timeline-content">
+                            <h3 class="timeline-title">Progress Analytics</h3>
+                            <div class="timeline-time">Insights • Real-time</div>
+                            <p class="timeline-description">
+                                Detailed analytics show your improvement over time. See your confidence scores, 
+                                knowledge gaps, and readiness for real-world financial decisions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>CareerLaunch Academy</h3>
+                    <p>
+                        Empowering job seekers with essential financial literacy skills. 
+                        Master money management before you start your career.
+                    </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Learning</h3>
+                    <p><a href="#courses">Courses</a></p>
+                    <p><a href="#ai-practice">AI Practice</a></p>
+                    <p><a href="#features">Features</a></p>
+                    <p><a href="#testimonials">Success Stories</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>📧 hello@careerlaunch.academy</p>
+                    <p>📱 @CareerLaunchAcademy</p>
+                    <p>🏢 Learning Center, Education District</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Partners</h3>
+                    <p><a href="#">National Financial Educators</a></p>
+                    <p><a href="#">Career Services Alliance</a></p>
+                    <p><a href="#">Young Professionals Network</a></p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 CareerLaunch Academy. Your financial future starts here.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '-50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements for animation
+        document.addEventListener('DOMContentLoaded', () => {
+            const animateElements = document.querySelectorAll('.hero-text > *');
+            animateElements.forEach((el, index) => {
+                el.style.animationDelay = `${index * 0.1}s`;
+                observer.observe(el);
+            });
+            
+            // Smooth progress bar animations
+            const progressBars = document.querySelectorAll('.progress-fill');
+            setTimeout(() => {
+                progressBars.forEach(bar => {
+                    bar.style.width = bar.style.width || '0%';
+                });
+            }, 1000);
+        });
+        
+        // Mobile menu toggle (placeholder)
+        const mobileToggle = document.querySelector('.mobile-menu-toggle');
+        mobileToggle?.addEventListener('click', () => {
+            // Mobile menu implementation would go here
+            console.log('Mobile menu toggled');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Header scroll effect
+        let lastScrollTop = 0;
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const header = document.querySelector('.header');
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                header.style.transform = 'translateY(0)';
+            }
+            
+            lastScrollTop = scrollTop;
+        });
+    </script>
+</body>
+</html>
