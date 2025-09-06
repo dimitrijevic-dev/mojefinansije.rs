@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Log in to CareerLaunch Academy - Access your financial literacy courses and AI practice sessions">
-    <meta name="keywords" content="login, CareerLaunch Academy, financial literacy, career preparation">
+    <meta name="description" content="Prijavite se na MojeFinansije - Pristupite svojim kursevima finansijske pismenosti i EurekAI sesijama">
+    <meta name="keywords" content="prijava, MojeFinansije, finansijska pismenost, obrazovanje">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Log In - CareerLaunch Academy">
-    <meta property="og:description" content="Access your personalized financial literacy learning dashboard">
-    <meta property="og:image" content="https://careerlaunch.academy/og-image.jpg">
+    <meta property="og:title" content="Prijavite se - MojeFinansije">
+    <meta property="og:description" content="Pristupite svom personalizovanom dashboardu za učenje finansijske pismenosti">
+    <meta property="og:image" content="https://mojefinansije.rs/og-image.jpg">
     <meta property="og:type" content="website">
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Log In - CareerLaunch Academy">
-    <meta name="twitter:description" content="Access your personalized financial literacy learning dashboard">
-    <meta name="twitter:image" content="https://careerlaunch.academy/twitter-image.jpg">
+    <meta name="twitter:title" content="Prijavite se - MojeFinansije">
+    <meta name="twitter:description" content="Pristupite svom personalizovanom dashboardu za učenje finansijske pismenosti">
+    <meta name="twitter:image" content="https://mojefinansije.rs/twitter-image.jpg">
     
-    <title>Log In - CareerLaunch Academy</title>
+    <title>Prijavite se - MojeFinansije</title>
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
@@ -200,7 +200,7 @@
         
         .login-container {
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
             position: relative;
         }
         
@@ -499,22 +499,22 @@
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">Preskoči na glavni sadržaj</a>
     
     <!-- Header -->
     <header class="header">
-        <nav class="nav" role="navigation" aria-label="Main navigation">
-            <a href="index.html" class="logo" aria-label="CareerLaunch Academy Home">
-                🎯 CareerLaunch
+        <nav class="nav" role="navigation" aria-label="Glavna navigacija">
+            <a href="index.html" class="logo" aria-label="MojeFinansije Početna">
+                💰 MojeFinansije
             </a>
             
             <ul class="nav-links">
-                <li><a href="index.html#courses">Courses</a></li>
-                <li><a href="index.html#ai-practice">AI Practice</a></li>
-                <li><a href="index.html#features">Features</a></li>
+                <li><a href="index.html#courses">Kursevi</a></li>
+                <li><a href="index.html#ai-practice">EurekAI</a></li>
+                <li><a href="index.html#features">Funkcionalnosti</a></li>
             </ul>
             
-            <a href="register.html" class="btn btn-primary" role="button">Register</a>
+            <a href="register.html" class="btn btn-primary" role="button">Registrujte se</a>
         </nav>
     </header>
     
@@ -523,59 +523,59 @@
         <div class="login-container">
             <div class="login-card fade-in">
                 <div class="login-header">
-                    <h1>Welcome Back</h1>
-                    <p>Continue your financial literacy journey</p>
+                    <h1>Dobrodošli nazad</h1>
+                    <p>Nastavite svoje putovanje finansijske pismenosti</p>
                 </div>
                 
                 <div class="success-message" id="successMessage">
-                    Welcome back! Redirecting to your dashboard...
+                    Dobrodošli nazad! Preusmeravamo vas na vaš dashboard...
                 </div>
                 
                 <form class="login-form" id="loginForm" novalidate>
                     <div class="form-group">
-                        <label for="email" class="form-label">Email Address</label>
+                        <label for="email" class="form-label">Email adresa</label>
                         <input 
                             type="email" 
                             id="email" 
                             name="email" 
                             class="form-input" 
-                            placeholder="Enter your email address"
+                            placeholder="Unesite vašu email adresu"
                             required
                             autocomplete="email"
                         >
-                        <div class="form-error" id="emailError">Please enter a valid email address</div>
+                        <div class="form-error" id="emailError">Molimo unesite validnu email adresu</div>
                     </div>
                     
                     <div class="form-group">
-                        <label for="password" class="form-label">Password</label>
+                        <label for="password" class="form-label">Lozinka</label>
                         <input 
                             type="password" 
                             id="password" 
                             name="password" 
                             class="form-input" 
-                            placeholder="Enter your password"
+                            placeholder="Unesite vašu lozinku"
                             required
                             autocomplete="current-password"
                         >
-                        <div class="form-error" id="passwordError">Password is required</div>
+                        <div class="form-error" id="passwordError">Lozinka je obavezna</div>
                     </div>
                     
                     <div class="form-options">
                         <div class="checkbox-group">
                             <input type="checkbox" id="remember" name="remember" class="checkbox">
-                            <label for="remember">Remember me</label>
+                            <label for="remember">Zapamti me</label>
                         </div>
                     </div>
                     
                     <button type="submit" class="login-button" id="loginButton">
                         <span class="loading-spinner" id="loadingSpinner"></span>
-                        <span id="buttonText">Log In</span>
+                        <span id="buttonText">Prijavite se</span>
                     </button>
                 </form>
                 
                 
                 <div class="register-link">
-                    Don't have an account? <a href="register.html">Create one</a>
+                    Nemate nalog? <a href="register.html">Napravite ga</a>
                 </div>
             </div>
         </div>
@@ -654,16 +654,16 @@
                 
                 // Validate email
                 if (!email) {
-                    showError('email', 'Email address is required');
+                    showError('email', 'Email adresa je obavezna');
                     hasErrors = true;
                 } else if (!validateEmail(email)) {
-                    showError('email', 'Please enter a valid email address');
+                    showError('email', 'Molimo unesite validnu email adresu');
                     hasErrors = true;
                 }
                 
                 // Validate password
                 if (!password) {
-                    showError('password', 'Password is required');
+                    showError('password', 'Lozinka je obavezna');
                     hasErrors = true;
                 }
                 
@@ -674,7 +674,7 @@
                 // Show loading state
                 loginButton.disabled = true;
                 loadingSpinner.style.display = 'inline-block';
-                buttonText.textContent = 'Logging in...';
+                buttonText.textContent = 'Prijavljivanje...';
                 
                 try {
                     // Call login API
@@ -719,7 +719,7 @@
                         
                         // Update and show success message with displayname
                         const displayName = loginData.displayname || loginData.email;
-                        successMessage.textContent = `Welcome back, ${displayName}! Redirecting to your dashboard...`;
+                        successMessage.textContent = `Dobrodošli nazad, ${displayName}! Preusmeravamo vas na vaš dashboard...`;
                         successMessage.classList.add('show');
                         form.style.display = 'none';
                         
@@ -733,12 +733,12 @@
                     
                 } catch (error) {
                     // Handle login error
-                    showError('password', 'Invalid email or password. Please try again.');
+                    showError('password', 'Nevažeći email ili lozinka. Molimo pokušajte ponovo.');
                 } finally {
                     // Reset button state
                     loginButton.disabled = false;
                     loadingSpinner.style.display = 'none';
-                    buttonText.textContent = 'Log In';
+                    buttonText.textContent = 'Prijavite se';
                 }
             });
             

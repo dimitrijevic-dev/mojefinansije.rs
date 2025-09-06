@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn financial literacy with CareerLaunch Academy - Expert-led lessons for career success">
-    <meta name="keywords" content="financial literacy, lesson, education, career preparation, budgeting">
+    <meta name="description" content="Učite finansijsku pismenost na MojeFinansije - Platforma za učenje finansija sa ekspertskim lekcijama">
+    <meta name="keywords" content="finansijska pismenost, lekcije, edukacija, finansije, budžetiranje, investiranje">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="Financial Literacy Lesson - CareerLaunch Academy">
-    <meta property="og:description" content="Master essential financial skills through our comprehensive lessons">
-    <meta property="og:image" content="https://careerlaunch.academy/og-image.jpg">
+    <meta property="og:title" content="Lekcija o finansijskoj pismenosti - MojeFinansije">
+    <meta property="og:description" content="Savladajte ključne finansijske veštine kroz naše sveobuhvatne lekcije">
+    <meta property="og:image" content="https://mojefinansije.rs/og-image.jpg">
     <meta property="og:type" content="website">
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Financial Literacy Lesson - CareerLaunch Academy">
-    <meta name="twitter:description" content="Master essential financial skills through our comprehensive lessons">
-    <meta name="twitter:image" content="https://careerlaunch.academy/twitter-image.jpg">
+    <meta name="twitter:title" content="Lekcija o finansijskoj pismenosti - MojeFinansije">
+    <meta name="twitter:description" content="Savladajte ključne finansijske veštine kroz naše sveobuhvatne lekcije">
+    <meta name="twitter:image" content="https://mojefinansije.rs/twitter-image.jpg">
     
-    <title>Financial Literacy Lesson - CareerLaunch Academy</title>
+    <title>Lekcija o finansijskoj pismenosti - MojeFinansije</title>
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
@@ -856,26 +856,26 @@
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">Preskoči na glavni sadržaj</a>
     
     <!-- Header -->
     <header class="header">
-        <nav class="nav" role="navigation" aria-label="Main navigation">
-            <a href="index.html" class="logo" aria-label="CareerLaunch Academy Home">
-                🎯 CareerLaunch
+        <nav class="nav" role="navigation" aria-label="Glavna navigacija">
+            <a href="index.html" class="logo" aria-label="MojeFinansije Početna">
+                💰 MojeFinansije
             </a>
             
             <ul class="nav-links">
-                <li><a href="lessons.html">Lessons</a></li>
-                <li><a href="index.html#courses">Courses</a></li>
-                <li><a href="index.html#ai-practice">AI Practice</a></li>
-                <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#testimonials">Success Stories</a></li>
+                <li><a href="lessons.html">Lekcije</a></li>
+                <li><a href="index.html#courses">Kursevi</a></li>
+                <li><a href="index.html#ai-practice">EurekAI</a></li>
+                <li><a href="index.html#features">Funkcionalnosti</a></li>
+                <li><a href="index.html#testimonials">Iskustva korisnika</a></li>
             </ul>
             
             <div class="auth-buttons">
-                <a href="login.html" class="btn btn-secondary" role="button">Log In</a>
-                <a href="register.html" class="btn btn-primary" role="button">Register</a>
+                <a href="login.html" class="btn btn-secondary" role="button">Prijavite se</a>
+                <a href="register.html" class="btn btn-primary" role="button">Registrujte se</a>
             </div>
         </nav>
     </header>
@@ -884,24 +884,24 @@
     <main id="main-content" class="main">
         <div class="container">
             <!-- Breadcrumb -->
-            <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="index.html">Home</a>
+            <nav class="breadcrumb" aria-label="Navigacija">
+                <a href="index.html">Početna</a>
                 <span class="breadcrumb-separator">›</span>
-                <span>Lesson</span>
+                <span>Lekcija</span>
             </nav>
             
             <!-- Loading State -->
             <div id="loadingState" class="loading">
                 <div class="loading-spinner"></div>
-                Loading lesson...
+                Učitava se lekcija...
             </div>
             
             <!-- Error State -->
             <div id="errorState" class="error" style="display: none;">
                 <div class="error-icon">⚠️</div>
-                <h2 class="error-title">Unable to load lesson</h2>
-                <p class="error-message">There was a problem loading this lesson. Please try again later.</p>
-                <button class="btn-lesson-primary" onclick="loadLesson()">Try Again</button>
+                <h2 class="error-title">Nije moguće učitati lekciju</h2>
+                <p class="error-message">Došlo je do problema prilikom učitavanja ove lekcije. Molimo pokušajte ponovo.</p>
+                <button class="btn-lesson-primary" onclick="loadLesson()">Pokušaj ponovo</button>
             </div>
             
             <!-- Lesson Content -->
@@ -916,7 +916,7 @@
                     </div>
                     
                     <div class="lesson-actions">
-                        <a href="#" class="btn-lesson-secondary" id="nextLessonButton">Next Lesson</a>
+                        <a href="#" class="btn-lesson-secondary" id="nextLessonButton">Sledeća lekcija</a>
                     </div>
                 </div>
                 
@@ -924,13 +924,13 @@
                     <div class="video-card fade-in">
                         <div class="video-header">
                             <div class="video-icon">📹</div>
-                            <h3 class="video-title">Lesson Video</h3>
+                            <h3 class="video-title">Video materijal</h3>
                         </div>
                         <div class="video-container">
                             <iframe 
                                 id="lessonVideo" 
                                 src="" 
-                                title="Lesson Video"
+                                title="Video materijal lekcije"
                                 allowfullscreen>
                             </iframe>
                         </div>
@@ -939,11 +939,11 @@
                     <div class="progress-card fade-in">
                         <div class="progress-header">
                             <div class="progress-icon">📊</div>
-                            <h3 class="progress-title">Your Progress</h3>
+                            <h3 class="progress-title">Vaš napredak</h3>
                         </div>
                         <div class="progress-item">
                             <div class="progress-label">
-                                <span>Course Progress</span>
+                                <span>Napredak kursa</span>
                                 <span>25%</span>
                             </div>
                             <div class="progress-bar">
@@ -952,7 +952,7 @@
                         </div>
                         <div class="progress-item">
                             <div class="progress-label">
-                                <span>This Lesson</span>
+                                <span>Ova lekcija</span>
                                 <span id="lessonProgressPercent">0%</span>
                             </div>
                             <div class="progress-bar">
@@ -985,7 +985,7 @@
                             <textarea 
                                 id="chatInput" 
                                 class="chat-input" 
-                                placeholder="Ask a question about the lesson..."
+                                placeholder="Postavite pitanje o lekciji..."
                                 rows="1"></textarea>
                             <button id="chatSendBtn" class="chat-send-btn" onclick="sendMessage()">
                                 <span>📤</span>
@@ -1009,7 +1009,7 @@
             
             if (!userData || !isLoggedIn || isLoggedIn !== 'true') {
                 // User is not logged in, redirect to login page
-                console.log('🔒 User not authenticated, redirecting to login page');
+                console.log('🔒 Korisnik nije prijavljen, preusmeravanje na stranicu za prijavu');
                 window.location.href = 'login.html';
                 return false;
             }
@@ -1032,12 +1032,12 @@
                             <span class="user-name">${user.email}</span>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item" onclick="logout()">Log Out</a>
+                        <a href="#" class="dropdown-item" onclick="logout()">Odjavi se</a>
                     </div>
                 </div>
             `;
             
-            console.log('👤 Updated header for logged-in user:', user.email);
+            console.log('👤 Ažuriran header za prijavljenog korisnika:', user.email);
         }
         
         // Toggle user dropdown
@@ -1065,7 +1065,7 @@
             sessionStorage.removeItem('userData');
             sessionStorage.removeItem('isLoggedIn');
             
-            console.log('🔓 User logged out');
+            console.log('🔓 Korisnik se odjavio');
             
             // Redirect to login page
             window.location.href = 'login.html';
@@ -1208,7 +1208,7 @@
                 }
                 
                 // Update page title
-                document.title = `${lesson.title} - CareerLaunch Academy`;
+                document.title = `${lesson.title} - MojeFinansije`;
                 
                 // Update Next Lesson button
                 updateNextLessonButton(lessonId);
@@ -1425,7 +1425,7 @@
             } catch (error) {
                 console.error('❌ Error sending message:', error);
                 hideTypingIndicator();
-                addMessage("I'm sorry, I'm having trouble responding right now. Please try again later.");
+                addMessage("Izvinjavam se, trenutno imam problema sa odgovaranjem. Molim pokušajte ponovo kasnije.");
             } finally {
                 chatSendBtn.disabled = false;
                 chatInput.focus();
@@ -1489,7 +1489,7 @@
                 }
                 
                 // Fallback welcome message
-                addMessage("Zdravo! Ja sam tvoj AI asistent za učenje. Pitaj me šta god želiš o ovoj lekciji!", false);
+                addMessage("Zdravo! Ja sam EurekAI, tvoj AI asistent za finansijsku pismenost. Pitaj me šta god želiš o ovoj lekciji!", false);
             }
         }
         

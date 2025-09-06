@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Browse all financial literacy lessons at CareerLaunch Academy - Expert-led content for career success">
-    <meta name="keywords" content="financial literacy, lessons, education, career preparation, budgeting">
+    <meta name="description" content="Pregledajte sva predavanja o finansijskoj pismenosti na MojeFinansije platformi">
+    <meta name="keywords" content="finansijska pismenost, predavanja, edukacija, učenje, budžetiranje">
     
     <!-- Open Graph -->
-    <meta property="og:title" content="All Lessons - CareerLaunch Academy">
-    <meta property="og:description" content="Explore our comprehensive library of financial literacy lessons">
-    <meta property="og:image" content="https://careerlaunch.academy/og-image.jpg">
+    <meta property="og:title" content="Sva predavanja - MojeFinansije">
+    <meta property="og:description" content="Istražite našu sveobuhvatnu biblioteku predavanja o finansijskoj pismenosti">
+    <meta property="og:image" content="https://mojefinansije.rs/og-image.jpg">
     <meta property="og:type" content="website">
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="All Lessons - CareerLaunch Academy">
-    <meta name="twitter:description" content="Explore our comprehensive library of financial literacy lessons">
-    <meta name="twitter:image" content="https://careerlaunch.academy/twitter-image.jpg">
+    <meta name="twitter:title" content="Sva predavanja - MojeFinansije">
+    <meta name="twitter:description" content="Istražite našu sveobuhvatnu biblioteku predavanja o finansijskoj pismenosti">
+    <meta name="twitter:image" content="https://mojefinansije.rs/twitter-image.jpg">
     
-    <title>All Lessons - CareerLaunch Academy</title>
+    <title>Sva predavanja - MojeFinansije</title>
     
     <!-- Preload critical resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
@@ -599,26 +599,26 @@
     </style>
 </head>
 <body>
-    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <a href="#main-content" class="skip-link">Pređi na glavni sadržaj</a>
     
     <!-- Header -->
     <header class="header">
         <nav class="nav" role="navigation" aria-label="Main navigation">
-            <a href="index.html" class="logo" aria-label="CareerLaunch Academy Home">
-                🎯 CareerLaunch
+            <a href="index.html" class="logo" aria-label="MojeFinansije Početna">
+                💰 MojeFinansije
             </a>
             
             <ul class="nav-links">
-                <li><a href="lessons.html" class="active">Lessons</a></li>
-                <li><a href="index.html#courses">Courses</a></li>
-                <li><a href="index.html#ai-practice">AI Practice</a></li>
-                <li><a href="index.html#features">Features</a></li>
-                <li><a href="index.html#testimonials">Success Stories</a></li>
+                <li><a href="lessons.html" class="active">Predavanja</a></li>
+                <li><a href="index.html#courses">Kursevi</a></li>
+                <li><a href="index.html#ai-practice">EurekAI</a></li>
+                <li><a href="index.html#features">Funkcionalnosti</a></li>
+                <li><a href="index.html#testimonials">Prihe uspeha</a></li>
             </ul>
             
             <div class="auth-buttons">
-                <a href="login.html" class="btn btn-secondary" role="button">Log In</a>
-                <a href="register.html" class="btn btn-primary" role="button">Register</a>
+                <a href="login.html" class="btn btn-secondary" role="button">Prijavi se</a>
+                <a href="register.html" class="btn btn-primary" role="button">Registruj se</a>
             </div>
         </nav>
     </header>
@@ -628,15 +628,15 @@
         <div class="container">
             <!-- Breadcrumb -->
             <nav class="breadcrumb" aria-label="Breadcrumb">
-                <a href="index.html">Home</a>
+                <a href="index.html">Početna</a>
                 <span class="breadcrumb-separator">›</span>
-                <span>Lessons</span>
+                <span>Predavanja</span>
             </nav>
             
             <!-- Header Section -->
             <div class="lessons-header">
-                <h1 class="lessons-title">All Lessons</h1>
-                <p class="lessons-subtitle">Master financial literacy through our comprehensive collection of expert-led lessons</p>
+                <h1 class="lessons-title">Sva predavanja</h1>
+                <p class="lessons-subtitle">Ovladajte finansijskom pismenošću kroz našu sveobuhvatnu kolekciju predavanja vodenih od strane eksperata</p>
                 
                 <!-- Search Section -->
                 <div class="search-section">
@@ -645,34 +645,33 @@
                         <input 
                             type="text" 
                             class="search-input" 
-                            placeholder="Search lessons..." 
+                            placeholder="Pretraži predavanja..." 
                             id="searchInput"
-                            disabled
                         >
                     </div>
-                    <p class="search-note">Search functionality coming soon!</p>
+                    <p class="search-note">Kucajte da pretražite predavanja</p>
                 </div>
             </div>
             
             <!-- Loading State -->
             <div id="loadingState" class="loading">
                 <div class="loading-spinner"></div>
-                Loading lessons...
+                Učitavam predavanja...
             </div>
             
             <!-- Error State -->
             <div id="errorState" class="error" style="display: none;">
                 <div class="error-icon">⚠️</div>
-                <h2 class="error-title">Unable to load lessons</h2>
-                <p class="error-message">There was a problem loading the lessons. Please try again later.</p>
-                <button class="btn btn-primary" onclick="loadLessons()">Try Again</button>
+                <h2 class="error-title">Nije moguće učitati predavanja</h2>
+                <p class="error-message">Dogodio se problem prilikom učitavanja predavanja. Molimo pokušajte kasnije.</p>
+                <button class="btn btn-primary" onclick="loadLessons()">Pokušaj ponovo</button>
             </div>
             
             <!-- Empty State -->
             <div id="emptyState" class="empty-state" style="display: none;">
                 <div class="empty-icon">📚</div>
-                <h2 class="empty-title">No lessons found</h2>
-                <p class="empty-message">We couldn't find any lessons. Please try again later or check back soon!</p>
+                <h2 class="empty-title">Nisu pronađena predavanja</h2>
+                <p class="empty-message">Nismo mogli pronaći predavanja. Molimo pokušajte kasnije!</p>
             </div>
             
             <!-- Lessons Grid -->
@@ -695,7 +694,7 @@
             
             if (!userData || !isLoggedIn || isLoggedIn !== 'true') {
                 // User is not logged in, redirect to login page
-                console.log('🔒 User not authenticated, redirecting to login page');
+                console.log('🔒 Korisnik nije autentifikovan, preusmjeravam na stranicu za prijavu');
                 window.location.href = 'login.html';
                 return false;
             }
@@ -718,12 +717,12 @@
                             <span class="user-name">${user.email}</span>
                         </div>
                         <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item" onclick="logout()">Log Out</a>
+                        <a href="#" class="dropdown-item" onclick="logout()">Odjavi se</a>
                     </div>
                 </div>
             `;
             
-            console.log('👤 Updated header for logged-in user:', user.email);
+            console.log('👤 Ažuriran header za ulogovanog korisnika:', user.email);
         }
         
         // Toggle user dropdown
@@ -751,7 +750,7 @@
             sessionStorage.removeItem('userData');
             sessionStorage.removeItem('isLoggedIn');
             
-            console.log('🔓 User logged out');
+            console.log('🔓 Korisnik je odjavljen');
             
             // Redirect to login page
             window.location.href = 'login.html';
@@ -761,20 +760,20 @@
         function createLessonCard(lesson, index) {
             const truncatedDescription = lesson.body ? 
                 lesson.body.substring(0, 120) + (lesson.body.length > 120 ? '...' : '') : 
-                'No description available';
+                'Opis nije dostupan';
             
             return `
                 <div class="lesson-card fade-in" onclick="openLesson(${lesson.id})" style="animation-delay: ${index * 0.1}s">
                     <div class="lesson-card-header">
                         <div class="lesson-icon">📖</div>
-                        <div class="lesson-number">Lesson ${lesson.id}</div>
+                        <div class="lesson-number">Predavanje ${lesson.id}</div>
                     </div>
-                    <h3 class="lesson-card-title">${lesson.title || 'Untitled Lesson'}</h3>
+                    <h3 class="lesson-card-title">${lesson.title || 'Predavanje bez naziva'}</h3>
                     <p class="lesson-description">${truncatedDescription}</p>
                     <div class="lesson-card-footer">
                         <div class="lesson-duration">
                             <span>⏱️</span>
-                            <span>15 min read</span>
+                            <span>15 min čitanja</span>
                         </div>
                         <div class="lesson-arrow">→</div>
                     </div>
@@ -817,7 +816,7 @@
             const lessonsGrid = document.getElementById('lessonsGrid');
             const emptyState = document.getElementById('emptyState');
             
-            console.log('🔄 Starting to load lessons from API');
+            console.log('🔄 Počinjem učitavanje predavanja iz API-ja');
             
             try {
                 // Show loading state
@@ -826,7 +825,7 @@
                 lessonsGrid.style.display = 'none';
                 emptyState.style.display = 'none';
                 
-                console.log('🌐 Fetching from API:', `${API_BASE_URL}/lessons`);
+                console.log('🌐 Dohvatam iz API-ja:', `${API_BASE_URL}/lessons`);
                 
                 // Fetch from API with timeout
                 const controller = new AbortController();
@@ -847,7 +846,7 @@
                 }
                 
                 const lessons = await response.json();
-                console.log('✅ Loaded lessons from API:', lessons);
+                console.log('✅ Učitana predavanja iz API-ja:', lessons);
                 
                 // Store lessons globally
                 allLessons = Array.isArray(lessons) ? lessons : [];
@@ -859,10 +858,10 @@
                 // Render lessons
                 renderLessons(filteredLessons);
                 
-                console.log('✅ Lessons loaded and rendered successfully!');
+                console.log('✅ Predavanja su uspešno učitana i prikazana!');
                 
             } catch (error) {
-                console.error('❌ Error loading lessons:', error);
+                console.error('❌ Greška pri učitavanju predavanja:', error);
                 
                 // Show error state
                 loadingState.style.display = 'none';
@@ -872,26 +871,90 @@
             }
         }
         
-        // Search functionality (placeholder for future implementation)
+        // Search functionality with API call
+        let searchTimeout;
+        
         function initializeSearch() {
             const searchInput = document.getElementById('searchInput');
             
-            // Currently disabled as per user request
-            // When API supports search, enable this functionality
             searchInput.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase().trim();
+                const query = e.target.value.trim();
                 
-                if (query === '') {
-                    filteredLessons = [...allLessons];
-                } else {
-                    filteredLessons = allLessons.filter(lesson => 
-                        lesson.title.toLowerCase().includes(query) ||
-                        (lesson.body && lesson.body.toLowerCase().includes(query))
-                    );
+                // Clear previous timeout
+                if (searchTimeout) {
+                    clearTimeout(searchTimeout);
                 }
                 
-                renderLessons(filteredLessons);
+                // If query is empty, show all lessons
+                if (query === '') {
+                    filteredLessons = [...allLessons];
+                    renderLessons(filteredLessons);
+                    return;
+                }
+                
+                // Debounce search requests (wait 300ms after user stops typing)
+                searchTimeout = setTimeout(() => {
+                    performSearch(query);
+                }, 300);
             });
+        }
+        
+        // Perform search API call
+        async function performSearch(query) {
+            const loadingState = document.getElementById('loadingState');
+            const errorState = document.getElementById('errorState');
+            const lessonsGrid = document.getElementById('lessonsGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            console.log('🔍 Pretražujem predavanja za:', query);
+            
+            try {
+                // Show loading state
+                loadingState.style.display = 'flex';
+                errorState.style.display = 'none';
+                lessonsGrid.style.display = 'none';
+                emptyState.style.display = 'none';
+                
+                // Call search API
+                const response = await fetch(`${API_BASE_URL}/lessons/search/${encodeURIComponent(query)}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const searchResults = await response.json();
+                console.log('✅ Rezultati pretrage:', searchResults);
+                
+                // Update filtered lessons
+                filteredLessons = Array.isArray(searchResults) ? searchResults : [];
+                
+                // Hide loading state
+                loadingState.style.display = 'none';
+                
+                // Render search results
+                renderLessons(filteredLessons);
+                
+            } catch (error) {
+                console.error('❌ Greška pri pretragzi predavanja:', error);
+                
+                // On error, fall back to local search through all lessons
+                console.log('📋 Koristim lokalnu pretragu kao rezervu');
+                filteredLessons = allLessons.filter(lesson => 
+                    lesson.title.toLowerCase().includes(query.toLowerCase()) ||
+                    (lesson.body && lesson.body.toLowerCase().includes(query.toLowerCase()))
+                );
+                
+                // Hide loading state
+                loadingState.style.display = 'none';
+                
+                // Render filtered results
+                renderLessons(filteredLessons);
+            }
         }
         
         // Initialize page
@@ -905,7 +968,7 @@
             // Update header with user info
             updateHeaderForLoggedInUser(user);
             
-            // Initialize search (currently disabled)
+            // Initialize search functionality
             initializeSearch();
             
             // Load lessons
