@@ -565,7 +565,6 @@
                             <input type="checkbox" id="remember" name="remember" class="checkbox">
                             <label for="remember">Remember me</label>
                         </div>
-                        <a href="#" class="forgot-password">Forgot password?</a>
                     </div>
                     
                     <button type="submit" class="login-button" id="loginButton">
@@ -678,27 +677,53 @@
                 buttonText.textContent = 'Logging in...';
                 
                 try {
-                    // Simulate API call
-                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    // Call login API
+                    const response = await fetch('http://localhost:8080/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: email,
+                            password: password
+                        })
+                    });
                     
-                    // Store user data (simulate successful login)
-                    const userData = {
-                        email: email,
-                        fullName: 'User Name', // In real app, this would come from API
-                        isLoggedIn: true
-                    };
-                    
-                    localStorage.setItem('userData', JSON.stringify(userData));
-                    localStorage.setItem('isLoggedIn', 'true');
-                    
-                    // Show success message
-                    successMessage.classList.add('show');
-                    form.style.display = 'none';
-                    
-                    // Redirect to dashboard
-                    setTimeout(() => {
-                        window.location.href = 'homepage2.html';
-                    }, 2000);
+                    if (response.ok) {
+                        // Store user data (successful login)
+                        const userData = {
+                            email: email,
+                            isLoggedIn: true
+                        };
+                        
+                        // Handle Remember Me functionality
+                        const rememberMe = document.getElementById('remember').checked;
+                        if (rememberMe) {
+                            // Store in localStorage for persistent login
+                            localStorage.setItem('userData', JSON.stringify(userData));
+                            localStorage.setItem('isLoggedIn', 'true');
+                            localStorage.setItem('rememberMe', 'true');
+                        } else {
+                            // Store in sessionStorage for session-only login
+                            sessionStorage.setItem('userData', JSON.stringify(userData));
+                            sessionStorage.setItem('isLoggedIn', 'true');
+                            // Clear any previous remember me data
+                            localStorage.removeItem('userData');
+                            localStorage.removeItem('isLoggedIn');
+                            localStorage.removeItem('rememberMe');
+                        }
+                        
+                        // Show success message
+                        successMessage.classList.add('show');
+                        form.style.display = 'none';
+                        
+                        // Redirect to dashboard
+                        setTimeout(() => {
+                            window.location.href = 'homepage2.html';
+                        }, 2000);
+                    } else {
+                        throw new Error('Login failed');
+                    }
                     
                 } catch (error) {
                     // Handle login error
