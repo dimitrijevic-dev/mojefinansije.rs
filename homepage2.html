@@ -119,40 +119,108 @@
             color: var(--apple-blue);
         }
         
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--system-black);
+            border: 1px solid var(--warm-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            border-color: var(--apple-blue);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--apple-blue), #0056CC);
+            color: var(--system-white);
+            box-shadow: 0 4px 14px rgba(0, 122, 255, 0.25);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+        
+        /* User Menu */
         .user-menu {
             position: relative;
         }
         
-        .user-button {
-            display: flex;
-            align-items: center;
-            gap: var(--spacing-small);
-            padding: 8px 16px;
+        .user-icon {
+            width: 40px;
+            height: 40px;
             background: var(--light-gray);
-            border: none;
-            border-radius: var(--radius-medium);
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 500;
-            transition: background 0.2s ease;
-        }
-        
-        .user-button:hover {
-            background: #e0e0e5;
-        }
-        
-        .user-avatar {
-            width: 24px;
-            height: 24px;
-            background: var(--apple-blue);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            font-size: 12px;
-            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+        }
+        
+        .user-icon:hover {
+            background: var(--apple-blue);
+            color: var(--system-white);
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--system-white);
+            border-radius: var(--radius-medium);
+            box-shadow: var(--shadow-large);
+            border: 1px solid var(--light-gray);
+            min-width: 200px;
+            z-index: 1000;
+        }
+        
+        .user-info {
+            padding: var(--spacing-medium);
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--system-black);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: var(--light-gray);
+            margin: 0;
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: var(--spacing-medium);
+            color: var(--system-black);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--light-gray);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: var(--spacing-medium);
         }
         
         /* Main Content */
@@ -453,17 +521,15 @@
             </a>
             
             <ul class="nav-links">
+                <li><a href="lessons.html">Lessons</a></li>
                 <li><a href="#lessons">My Lessons</a></li>
                 <li><a href="#progress">Progress</a></li>
                 <li><a href="#practice">AI Practice</a></li>
             </ul>
             
-            <div class="user-menu">
-                <button class="user-button" onclick="logout()">
-                    <div class="user-avatar" id="userAvatar">U</div>
-                    <span id="userName">User</span>
-                    <span>↓</span>
-                </button>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-secondary" role="button">Log In</a>
+                <a href="register.html" class="btn btn-primary" role="button">Register</a>
             </div>
         </nav>
     </header>
@@ -506,7 +572,7 @@
                 <section class="recent-lessons fade-in">
                     <div class="section-header">
                         <h2 class="section-title">Continue Learning</h2>
-                        <a href="#" class="view-all">View All</a>
+                        <a href="lessons.html" class="view-all">View All</a>
                     </div>
                     
                     <div class="lesson-list">
@@ -590,19 +656,81 @@
             return true;
         }
         
+        // Check if user is authenticated
+        function checkAuthentication() {
+            const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn');
+            
+            if (!userData || !isLoggedIn || isLoggedIn !== 'true') {
+                // User is not logged in, redirect to login page
+                console.log('🔒 User not authenticated, redirecting to login page');
+                window.location.href = 'login.html';
+                return false;
+            }
+            
+            return JSON.parse(userData);
+        }
+        
+        // Update header for logged-in user
+        function updateHeaderForLoggedInUser(user) {
+            const authButtons = document.querySelector('.auth-buttons');
+            
+            // Create user dropdown HTML
+            authButtons.innerHTML = `
+                <div class="user-menu">
+                    <div class="user-icon" onclick="toggleUserDropdown()">
+                        <span>👤</span>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown" style="display: none;">
+                        <div class="user-info">
+                            <span class="user-name">${user.email}</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="logout()">Log Out</a>
+                    </div>
+                </div>
+            `;
+            
+            console.log('👤 Updated header for logged-in user:', user.email);
+        }
+        
+        // Toggle user dropdown
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (userMenu && dropdown && !userMenu.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is authenticated
-            if (!checkAuth()) return;
-            // Get user data from localStorage or sessionStorage
-            const userData = JSON.parse(localStorage.getItem('userData') || sessionStorage.getItem('userData') || '{}');
+            const user = checkAuthentication();
+            if (!user) {
+                return; // Will redirect to login
+            }
             
-            // Update user info
-            if (userData.fullName) {
-                const firstName = userData.fullName.split(' ')[0];
-                document.getElementById('userName').textContent = firstName;
+            // Update header with user info
+            updateHeaderForLoggedInUser(user);
+            
+            // Update user info in welcome section
+            if (user.displayname) {
+                const firstName = user.displayname.split(' ')[0];
                 document.getElementById('welcomeName').textContent = firstName;
-                document.getElementById('userAvatar').textContent = firstName.charAt(0).toUpperCase();
+            } else if (user.fullName) {
+                const firstName = user.fullName.split(' ')[0];
+                document.getElementById('welcomeName').textContent = firstName;
+            } else if (user.email) {
+                const emailName = user.email.split('@')[0];
+                document.getElementById('welcomeName').textContent = emailName;
             }
             
             // Add fade-in animations
@@ -621,15 +749,17 @@
         
         // Logout function
         function logout() {
-            // Clear user data from both storages
+            // Clear authentication data
             localStorage.removeItem('userData');
             localStorage.removeItem('isLoggedIn');
             localStorage.removeItem('rememberMe');
             sessionStorage.removeItem('userData');
             sessionStorage.removeItem('isLoggedIn');
             
-            // Redirect to homepage
-            window.location.href = 'index.html';
+            console.log('🔓 User logged out');
+            
+            // Redirect to login page
+            window.location.href = 'login.html';
         }
         
         // Header scroll effect

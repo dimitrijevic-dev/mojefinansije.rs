@@ -690,9 +690,13 @@
                     });
                     
                     if (response.ok) {
+                        // Get user data from API response
+                        const loginData = await response.json();
+                        
                         // Store user data (successful login)
                         const userData = {
-                            email: email,
+                            email: loginData.email,
+                            displayname: loginData.displayname,
                             isLoggedIn: true
                         };
                         
@@ -713,7 +717,9 @@
                             localStorage.removeItem('rememberMe');
                         }
                         
-                        // Show success message
+                        // Update and show success message with displayname
+                        const displayName = loginData.displayname || loginData.email;
+                        successMessage.textContent = `Welcome back, ${displayName}! Redirecting to your dashboard...`;
                         successMessage.classList.add('show');
                         form.style.display = 'none';
                         
