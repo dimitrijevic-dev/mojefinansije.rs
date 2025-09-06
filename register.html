@@ -597,34 +597,18 @@
                 </div>
                 
                 <form class="register-form" id="registerForm" novalidate>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName" class="form-label">First Name<span class="required">*</span></label>
-                            <input 
-                                type="text" 
-                                id="firstName" 
-                                name="firstName" 
-                                class="form-input" 
-                                placeholder="Enter your first name"
-                                required
-                                autocomplete="given-name"
-                            >
-                            <div class="form-error" id="firstNameError">First name is required</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="lastName" class="form-label">Last Name<span class="required">*</span></label>
-                            <input 
-                                type="text" 
-                                id="lastName" 
-                                name="lastName" 
-                                class="form-input" 
-                                placeholder="Enter your last name"
-                                required
-                                autocomplete="family-name"
-                            >
-                            <div class="form-error" id="lastNameError">Last name is required</div>
-                        </div>
+                    <div class="form-group">
+                        <label for="fullName" class="form-label">Full Name<span class="required">*</span></label>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            name="fullName" 
+                            class="form-input" 
+                            placeholder="Enter your full name"
+                            required
+                            autocomplete="name"
+                        >
+                        <div class="form-error" id="fullNameError">Full name is required</div>
                     </div>
                     
                     <div class="form-group">
@@ -677,30 +661,6 @@
                         <div class="form-success" id="confirmPasswordSuccess">Passwords match</div>
                     </div>
                     
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="experience" class="form-label">Experience Level</label>
-                            <select id="experience" name="experience" class="form-select">
-                                <option value="">Select your level</option>
-                                <option value="student">Student</option>
-                                <option value="recent-graduate">Recent Graduate</option>
-                                <option value="career-changer">Career Changer</option>
-                                <option value="experienced">Experienced Professional</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="goals" class="form-label">Primary Goal</label>
-                            <select id="goals" name="goals" class="form-select">
-                                <option value="">Select your goal</option>
-                                <option value="first-job">Prepare for first job</option>
-                                <option value="salary-negotiation">Salary negotiation</option>
-                                <option value="budgeting">Personal budgeting</option>
-                                <option value="career-change">Career transition</option>
-                                <option value="financial-planning">Long-term planning</option>
-                            </select>
-                        </div>
-                    </div>
                     
                     <div class="checkbox-group">
                         <input type="checkbox" id="terms" name="terms" class="checkbox" required>
@@ -711,12 +671,6 @@
                         <div class="form-error" id="termsError">You must agree to the terms and privacy policy</div>
                     </div>
                     
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="newsletter" name="newsletter" class="checkbox">
-                        <label for="newsletter" class="checkbox-label">
-                            Send me updates about new courses, features, and career tips
-                        </label>
-                    </div>
                     
                     <button type="submit" class="register-button" id="registerButton">
                         <span class="loading-spinner" id="loadingSpinner"></span>
@@ -724,20 +678,6 @@
                     </button>
                 </form>
                 
-                <div class="divider">
-                    <span>or sign up with</span>
-                </div>
-                
-                <div class="social-login">
-                    <a href="#" class="social-button">
-                        <span>🔍</span>
-                        Continue with Google
-                    </a>
-                    <a href="#" class="social-button">
-                        <span>🍎</span>
-                        Continue with Apple
-                    </a>
-                </div>
                 
                 <div class="login-link">
                     Already have an account? <a href="login.html">Log in</a>
@@ -751,8 +691,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('registerForm');
             const inputs = {
-                firstName: document.getElementById('firstName'),
-                lastName: document.getElementById('lastName'),
+                fullName: document.getElementById('fullName'),
                 email: document.getElementById('email'),
                 password: document.getElementById('password'),
                 confirmPassword: document.getElementById('confirmPassword'),
@@ -849,23 +788,13 @@
             }
             
             // Real-time validation
-            inputs.firstName.addEventListener('blur', function() {
+            inputs.fullName.addEventListener('blur', function() {
                 if (!this.value.trim()) {
-                    showError('firstName', 'First name is required');
+                    showError('fullName', 'Full name is required');
                 } else if (this.value.trim().length < 2) {
-                    showError('firstName', 'First name must be at least 2 characters');
+                    showError('fullName', 'Full name must be at least 2 characters');
                 } else {
-                    hideError('firstName');
-                }
-            });
-            
-            inputs.lastName.addEventListener('blur', function() {
-                if (!this.value.trim()) {
-                    showError('lastName', 'Last name is required');
-                } else if (this.value.trim().length < 2) {
-                    showError('lastName', 'Last name must be at least 2 characters');
-                } else {
-                    hideError('lastName');
+                    hideError('fullName');
                 }
             });
             
@@ -933,13 +862,8 @@
                 const data = Object.fromEntries(formData.entries());
                 
                 // Validate all fields
-                if (!data.firstName || data.firstName.trim().length < 2) {
-                    showError('firstName', 'First name must be at least 2 characters');
-                    hasErrors = true;
-                }
-                
-                if (!data.lastName || data.lastName.trim().length < 2) {
-                    showError('lastName', 'Last name must be at least 2 characters');
+                if (!data.fullName || data.fullName.trim().length < 2) {
+                    showError('fullName', 'Full name must be at least 2 characters');
                     hasErrors = true;
                 }
                 
@@ -982,20 +906,23 @@
                     // Simulate API call
                     await new Promise(resolve => setTimeout(resolve, 2500));
                     
+                    // Store user data (simulate successful registration and auto-login)
+                    const userData = {
+                        email: data.email,
+                        fullName: data.fullName,
+                        isLoggedIn: true
+                    };
+                    
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
                     // Show success message
                     successMessage.classList.add('show');
                     form.style.display = 'none';
                     
-                    // Simulate redirect
+                    // Redirect to dashboard
                     setTimeout(() => {
-                        // In real implementation, redirect to email verification or login
-                        alert('Registration successful! (In real app, would send verification email)');
-                        
-                        // Reset for demo
-                        successMessage.classList.remove('show');
-                        form.style.display = 'flex';
-                        form.reset();
-                        updatePasswordStrength('');
+                        window.location.href = 'homepage2.html';
                     }, 3000);
                     
                 } catch (error) {

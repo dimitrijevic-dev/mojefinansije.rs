@@ -788,13 +788,6 @@
             }).join('');
         }
         
-        // Mock data for development
-        const mockLessonData = {
-            "id": 1,
-            "title": "Šta je finansijska pismenost i zašto ti treba?",
-            "body": "Finansijska pismenost znači da razumeš osnovne finansijske koncepte — npr. troškovi, štednja, ulaganje, rizici — i umeš da ih primeniš u stvarnom svetu kako bi donosio bolje odluke i poboljšao svoj finansijski položaj \nWikipedia\n.\n\nU ovoj lekciji:\n\nObjasni šta je "finansijska pismenost" jednostavno i bez žargona.\n\nNavedi primere: npr. kad kupiš određeni proizvod, da li ideš na istu etiketu ili porediš cene, razmatraš alternativne troškove, planiraš ušteđeno?\n\nProširi na "zašto": kad razumeš svoj novac, manje ludilo, manje impulzivnih odluka, više kontrole nad budžetom, planiranje za budućnost.\n\nNe bude generic: fokusiraj na njihove izazove — recimo mladi koji zavise od roditelja, prvi džeparac, mikro-uticaj društvenih mreža na potrošnju.",
-            "video_link": "https://youtu.be/uTbVWfdgXUY"
-        };
         
         // Load lesson from API
         async function loadLesson() {
@@ -802,6 +795,8 @@
             const loadingState = document.getElementById('loadingState');
             const errorState = document.getElementById('errorState');
             const lessonContent = document.getElementById('lessonContent');
+            
+            console.log('🔄 Starting to load lesson with ID:', lessonId);
             
             try {
                 // Show loading state
@@ -811,73 +806,57 @@
                 
                 let lesson;
                 
-                try {
-                    // Try to fetch from API first
-                    const response = await fetch(`${API_BASE_URL}/lessons/${lessonId}`, {
-                        mode: 'cors',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
-                    
-                    lesson = await response.json();
-                    console.log('✅ Loaded from API:', lesson);
-                    
-                } catch (apiError) {
-                    console.warn('⚠️ API not available, using mock data:', apiError.message);
-                    
-                    // Fallback to mock data
-                    lesson = mockLessonData;
-                    
-                    // Add a development notice
-                    setTimeout(() => {
-                        const notice = document.createElement('div');
-                        notice.style.cssText = `
-                            position: fixed;
-                            top: 80px;
-                            right: 20px;
-                            background: linear-gradient(135deg, #FF9500, #FF6B35);
-                            color: white;
-                            padding: 12px 16px;
-                            border-radius: 8px;
-                            font-size: 14px;
-                            font-weight: 500;
-                            z-index: 1000;
-                            box-shadow: 0 4px 12px rgba(255, 149, 0, 0.3);
-                            max-width: 300px;
-                        `;
-                        notice.innerHTML = '⚠️ Development Mode: Using mock data. Configure CORS on your backend.';
-                        document.body.appendChild(notice);
-                        
-                        // Auto-remove after 5 seconds
-                        setTimeout(() => {
-                            if (notice.parentNode) {
-                                notice.parentNode.removeChild(notice);
-                            }
-                        }, 5000);
-                    }, 1000);
+                console.log('🌐 Attempting to fetch from API:', `${API_BASE_URL}/lessons/${lessonId}`);
+                
+                // Fetch from API with a timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                
+                const response = await fetch(`${API_BASE_URL}/lessons/${lessonId}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
+                
+                lesson = await response.json();
+                console.log('✅ Loaded from API:', lesson);
+                
+                console.log('📝 Processing lesson data:', lesson);
                 
                 currentLesson = lesson;
                 
                 // Update page content
+                console.log('🏷️ Updating lesson title:', lesson.title);
                 document.getElementById('lessonTitle').textContent = lesson.title || 'Untitled Lesson';
-                document.getElementById('lessonBody').innerHTML = formatLessonBody(lesson.body);
+                
+                console.log('📄 Formatting lesson body...');
+                const formattedBody = formatLessonBody(lesson.body);
+                document.getElementById('lessonBody').innerHTML = formattedBody;
                 
                 // Setup video
                 if (lesson.video_link) {
+                    console.log('📹 Setting up video:', lesson.video_link);
                     const embedUrl = getYouTubeEmbedUrl(lesson.video_link);
+                    console.log('🔗 Embed URL:', embedUrl);
                     document.getElementById('lessonVideo').src = embedUrl;
                 } else {
+                    console.log('❌ No video link provided, hiding video card');
                     document.querySelector('.video-card').style.display = 'none';
                 }
                 
                 // Update page title
                 document.title = `${lesson.title} - CareerLaunch Academy`;
+                
+                
+                console.log('✨ Showing lesson content...');
                 
                 // Show lesson content
                 loadingState.style.display = 'none';
@@ -893,6 +872,8 @@
                 
                 // Start progress tracking
                 startProgressTracking();
+                
+                console.log('✅ Lesson loaded successfully!');
                 
             } catch (error) {
                 console.error('Error loading lesson:', error);

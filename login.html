@@ -574,20 +574,6 @@
                     </button>
                 </form>
                 
-                <div class="divider">
-                    <span>or continue with</span>
-                </div>
-                
-                <div class="social-login">
-                    <a href="#" class="social-button">
-                        <span>🔍</span>
-                        Continue with Google
-                    </a>
-                    <a href="#" class="social-button">
-                        <span>🍎</span>
-                        Continue with Apple
-                    </a>
-                </div>
                 
                 <div class="register-link">
                     Don't have an account? <a href="register.html">Create one</a>
@@ -695,20 +681,23 @@
                     // Simulate API call
                     await new Promise(resolve => setTimeout(resolve, 2000));
                     
+                    // Store user data (simulate successful login)
+                    const userData = {
+                        email: email,
+                        fullName: 'User Name', // In real app, this would come from API
+                        isLoggedIn: true
+                    };
+                    
+                    localStorage.setItem('userData', JSON.stringify(userData));
+                    localStorage.setItem('isLoggedIn', 'true');
+                    
                     // Show success message
                     successMessage.classList.add('show');
                     form.style.display = 'none';
                     
-                    // Simulate redirect
+                    // Redirect to dashboard
                     setTimeout(() => {
-                        // In real implementation, redirect to dashboard
-                        // window.location.href = '/dashboard';
-                        alert('Login successful! (In real app, would redirect to dashboard)');
-                        
-                        // Reset for demo
-                        successMessage.classList.remove('show');
-                        form.style.display = 'flex';
-                        form.reset();
+                        window.location.href = 'homepage2.html';
                     }, 2000);
                     
                 } catch (error) {

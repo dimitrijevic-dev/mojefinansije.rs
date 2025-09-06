@@ -1027,6 +1027,16 @@
     </footer>
     
     <script>
+        // Check if user is already logged in and redirect
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (isLoggedIn === 'true') {
+                // User is already logged in, redirect to dashboard
+                window.location.href = 'homepage2.html';
+                return;
+            }
+        });
+        
         // Intersection Observer for animations
         const observerOptions = {
             threshold: 0.1,
