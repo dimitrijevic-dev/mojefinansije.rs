@@ -20,7 +20,7 @@ func Start() {
 
 	router.GET("/lessons/:id", getLesson)
 	router.POST("/signup", signUp)
-	router.GET("/login", logIn)
+	router.POST("/login", logIn)
 	router.GET("/lessons", getAll)
 
 	router.Run("localhost:8080")
