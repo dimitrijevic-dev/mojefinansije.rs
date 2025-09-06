@@ -33,6 +33,7 @@ func Start() {
 
 func newLesson(c *gin.Context) {
 	var attempt persistence.LessonAttempt
+	c.BindJSON(&attempt)
 	c.IndentedJSON(http.StatusOK, persistence.AddLesson(attempt))
 }
 
