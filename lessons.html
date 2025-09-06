@@ -450,7 +450,7 @@
         .lesson-card-footer {
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-end;
             padding-top: var(--spacing-medium);
             border-top: 1px solid var(--light-gray);
         }
@@ -464,13 +464,23 @@
         }
         
         .lesson-arrow {
-            font-size: 18px;
+            font-size: 20px;
             color: var(--apple-blue);
             transition: transform 0.2s ease;
+            padding: var(--spacing-small);
+            border-radius: var(--radius-small);
+            background: rgba(0, 122, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
         }
         
         .lesson-card:hover .lesson-arrow {
             transform: translateX(4px);
+            background: rgba(0, 122, 255, 0.15);
+            color: #0056CC;
         }
         
         /* Loading State */
@@ -770,10 +780,6 @@
                     <h3 class="lesson-card-title">${lesson.title || 'Predavanje bez naziva'}</h3>
                     <p class="lesson-description">${truncatedDescription}</p>
                     <div class="lesson-card-footer">
-                        <div class="lesson-duration">
-                            <span>⏱️</span>
-                            <span>15 min čitanja</span>
-                        </div>
                         <div class="lesson-arrow">→</div>
                     </div>
                 </div>
