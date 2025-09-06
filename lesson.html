@@ -212,7 +212,7 @@
         }
         
         .container {
-            max-width: 1000px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: var(--spacing-xl) var(--spacing-large);
         }
@@ -246,7 +246,7 @@
         /* Lesson Container */
         .lesson-container {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 450px;
             gap: var(--spacing-xxxl);
             align-items: start;
         }
@@ -625,8 +625,6 @@
             <nav class="breadcrumb" aria-label="Breadcrumb">
                 <a href="index.html">Home</a>
                 <span class="breadcrumb-separator">›</span>
-                <a href="index.html#courses">Courses</a>
-                <span class="breadcrumb-separator">›</span>
                 <span>Lesson</span>
             </nav>
             
@@ -649,20 +647,6 @@
                 <div class="lesson-content fade-in">
                     <div class="lesson-header">
                         <h1 id="lessonTitle" class="lesson-title">Loading...</h1>
-                        <div class="lesson-meta">
-                            <div class="lesson-meta-item">
-                                <span>📚</span>
-                                <span>Lesson 1</span>
-                            </div>
-                            <div class="lesson-meta-item">
-                                <span>⏱️</span>
-                                <span>15 min read</span>
-                            </div>
-                            <div class="lesson-meta-item">
-                                <span>🎯</span>
-                                <span>Beginner</span>
-                            </div>
-                        </div>
                     </div>
                     
                     <div id="lessonBody" class="lesson-body">
@@ -670,10 +654,7 @@
                     </div>
                     
                     <div class="lesson-actions">
-                        <button class="btn-lesson-primary" onclick="markAsCompleted()">
-                            ✓ Mark as Completed
-                        </button>
-                        <a href="#" class="btn-lesson-secondary">Next Lesson</a>
+                        <a href="#" class="btn-lesson-secondary" id="nextLessonButton">Next Lesson</a>
                     </div>
                 </div>
                 
@@ -710,7 +691,7 @@
                         <div class="progress-item">
                             <div class="progress-label">
                                 <span>This Lesson</span>
-                                <span>0%</span>
+                                <span id="lessonProgressPercent">0%</span>
                             </div>
                             <div class="progress-bar">
                                 <div class="progress-fill" style="width: 0%" id="lessonProgress"></div>
@@ -788,6 +769,17 @@
             }).join('');
         }
         
+        // Update Next Lesson button URL
+        function updateNextLessonButton(currentLessonId) {
+            const nextLessonButton = document.getElementById('nextLessonButton');
+            const currentId = parseInt(currentLessonId);
+            const nextLessonId = currentId + 1;
+            
+            // Update the href to point to the next lesson
+            nextLessonButton.href = `lesson.html?id=${nextLessonId}`;
+            
+            console.log(`🔗 Updated Next Lesson button to point to lesson ${nextLessonId}`);
+        }
         
         // Load lesson from API
         async function loadLesson() {
@@ -855,6 +847,8 @@
                 // Update page title
                 document.title = `${lesson.title} - CareerLaunch Academy`;
                 
+                // Update Next Lesson button
+                updateNextLessonButton(lessonId);
                 
                 console.log('✨ Showing lesson content...');
                 
@@ -889,6 +883,7 @@
         function startProgressTracking() {
             let progress = 0;
             const lessonProgressBar = document.getElementById('lessonProgress');
+            const lessonProgressPercent = document.getElementById('lessonProgressPercent');
             
             // Simulate reading progress based on scroll
             function updateProgress() {
@@ -902,7 +897,9 @@
                     const scrollProgress = Math.max(0, Math.min(100, (visibleHeight / totalHeight) * 100));
                     
                     progress = Math.max(progress, scrollProgress);
-                    lessonProgressBar.style.width = `${progress}%`;
+                    const roundedProgress = Math.round(progress);
+                    lessonProgressBar.style.width = `${roundedProgress}%`;
+                    lessonProgressPercent.textContent = `${roundedProgress}%`;
                 }
             }
             
