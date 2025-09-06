@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fon/genai"
 	"fon/persistence"
 	"net/http"
 	"strconv"
@@ -22,6 +23,7 @@ func Start() {
 	router.POST("/signup", signUp)
 	router.POST("/login", logIn)
 	router.GET("/lessons", getAll)
+	router.POST("/lessons/:id/ai", askGPT)
 
 	router.Run("localhost:8080")
 }
@@ -59,4 +61,15 @@ func getLesson(c *gin.Context) {
 	id, _ := strconv.Atoi(idS)
 
 	c.IndentedJSON(http.StatusOK, persistence.GetLessonByID(id))
+}
+
+func askGPT(c *gin.Context) {
+	idS := c.Param("id")
+	id, _ := strconv.Atoi(idS)
+
+	var promptRequest genai.PromptRequest
+	c.BindJSON(&promptRequest)
+
+	result := genai.LessonAsk(promptRequest.Prompt, id)
+	c.IndentedJSON(http.StatusOK, result)
 }
