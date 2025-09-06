@@ -26,8 +26,14 @@ func Start() {
 	router.POST("/lessons/:id/ai", askGPT)
 	router.GET("/lessons/search/:query", search)
 	router.GET("/lessons/search", getAll)
+	router.POST("/lessons/new", newLesson)
 
 	router.Run("localhost:8080")
+}
+
+func newLesson(c *gin.Context) {
+	var attempt persistence.LessonAttempt
+	c.IndentedJSON(http.StatusOK, persistence.AddLesson(attempt))
 }
 
 func search(c *gin.Context) {

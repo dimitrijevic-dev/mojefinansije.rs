@@ -9,6 +9,12 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+type LessonAttempt struct {
+	Title     string `json:"title"`
+	Body      string `json:"body"`
+	VideoLink string `json:"video_link"`
+}
+
 type Lesson struct {
 	ID        int8   `json:"id"`
 	Title     string `json:"title"`
@@ -98,5 +104,12 @@ func AddUser(attempt UserSignup) error {
 	query := `INSERT INTO users (email, displayname, password) VALUES ($1,$2,$3)`
 
 	_, err := conn.Exec(context.Background(), query, attempt.Email, attempt.Displayname, config.Sha256(attempt.Password))
+	return err
+}
+
+func AddLesson(attempt LessonAttempt) error {
+	query := `INSERT INTO lessons (title,body,video_link) VALUES ($1,$2,$3)`
+
+	_, err := conn.Exec(context.Background(), query, attempt.Title, attempt.Body, attempt.VideoLink)
 	return err
 }
