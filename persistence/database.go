@@ -56,6 +56,20 @@ func GetAll() []Lesson {
 	return lessons
 }
 
+func GetBySearch(search string) []Lesson {
+	var lessons []Lesson
+	query := `SELECT * FROM lessons WHERE title LIKE $1`
+
+	searchPattern := "%" + search + "%"
+	err := pgxscan.Select(context.Background(), conn, &lessons, query, searchPattern)
+	if err != nil {
+		log.Println("Error in query! ", err)
+		return nil
+	}
+
+	return lessons
+}
+
 func GetLessonByID(id int) *Lesson {
 	var lesson Lesson
 	query := `SELECT * FROM lessons WHERE id = $1`
