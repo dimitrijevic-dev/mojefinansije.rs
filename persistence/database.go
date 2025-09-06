@@ -43,6 +43,19 @@ func Start() {
 	}
 }
 
+func GetAll() []Lesson {
+	var lessons []Lesson
+	query := `SELECT * FROM lessons`
+
+	err := pgxscan.Select(context.Background(), conn, &lessons, query)
+	if err != nil {
+		log.Printf("Error in query!")
+		return nil
+	}
+
+	return lessons
+}
+
 func GetLessonByID(id int) *Lesson {
 	var lesson Lesson
 	query := `SELECT * FROM lessons WHERE id = $1`

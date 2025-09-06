@@ -21,8 +21,13 @@ func Start() {
 	router.GET("/lessons/:id", getLesson)
 	router.POST("/signup", signUp)
 	router.GET("/login", logIn)
+	router.GET("/lessons", getAll)
 
 	router.Run("localhost:8080")
+}
+
+func getAll(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, persistence.GetAll())
 }
 
 func signUp(c *gin.Context) {
