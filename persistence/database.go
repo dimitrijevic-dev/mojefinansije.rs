@@ -85,9 +85,8 @@ func GetLessonByID(id int) *Lesson {
 func GetUser(email string, password string) *User {
 	var user User
 	query := `SELECT * FROM users WHERE email=$1 AND password=$2`
-	println("SELECT * FROM users WHERE email=" + email + " AND password=" + password)
 
-	err := pgxscan.Get(context.Background(), conn, &user, query, email, password)
+	err := pgxscan.Get(context.Background(), conn, &user, query, email, config.Sha256(password))
 	if err != nil {
 		log.Printf("User doesnt exist in DB! %v", err)
 	}
@@ -98,6 +97,6 @@ func GetUser(email string, password string) *User {
 func AddUser(attempt UserSignup) error {
 	query := `INSERT INTO users (email, displayname, password) VALUES ($1,$2,$3)`
 
-	_, err := conn.Exec(context.Background(), query, attempt.Email, attempt.Displayname, attempt.Password)
+	_, err := conn.Exec(context.Background(), query, attempt.Email, attempt.Displayname, config.Sha256(attempt.Password))
 	return err
 }
