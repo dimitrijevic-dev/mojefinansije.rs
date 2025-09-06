@@ -113,3 +113,11 @@ func AddLesson(attempt LessonAttempt) error {
 	_, err := conn.Exec(context.Background(), query, attempt.Title, attempt.Body, attempt.VideoLink)
 	return err
 }
+
+func CountAll() int {
+	var count int
+	query := `SELECT COUNT(*) FROM lessons`
+	pgxscan.Get(context.Background(), conn, &count, query)
+
+	return count
+}

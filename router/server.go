@@ -27,6 +27,7 @@ func Start() {
 	router.GET("/lessons/search/:query", search)
 	router.GET("/lessons/search", getAll)
 	router.POST("/lessons/new", newLesson)
+	router.GET("/lessons/count", countLessons)
 
 	router.Run("localhost:8080")
 }
@@ -86,4 +87,8 @@ func askGPT(c *gin.Context) {
 
 	result := genai.LessonAsk(promptRequest.Prompt, id)
 	c.IndentedJSON(http.StatusOK, result)
+}
+
+func countLessons(c *gin.Context) {
+	c.IndentedJSON(http.StatusOK, persistence.CountAll())
 }
