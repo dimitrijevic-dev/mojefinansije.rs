@@ -16,6 +16,23 @@ type Lesson struct {
 	VideoLink string `json:"video_link"`
 }
 
+type User struct {
+	Email       string `json:"email"`
+	Displayname string `json:"displayname"`
+	Password    string `json:"password"`
+}
+
+type UserSignup struct {
+	Email       string `json:"email"`
+	Displayname string `json:"displayname"`
+	Password    string `json:"password"`
+}
+
+type UserAttempt struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 var conn *pgxpool.Pool
 
 func Start() {
@@ -36,4 +53,24 @@ func GetLessonByID(id int) *Lesson {
 		return nil
 	}
 	return &lesson
+}
+
+func GetUser(email string, password string) *User {
+	var user User
+	query := `SELECT * FROM users WHERE email=$1 AND password=$2`
+	println("SELECT * FROM users WHERE email=" + email + " AND password=" + password)
+
+	err := pgxscan.Get(context.Background(), conn, &user, query, email, password)
+	if err != nil {
+		log.Printf("User doesnt exist in DB! %v", err)
+	}
+
+	return &user
+}
+
+func AddUser(attempt UserSignup) error {
+	query := `INSERT INTO users (email, displayname, password) VALUES ($1,$2,$3)`
+
+	_, err := conn.Exec(context.Background(), query, attempt.Email, attempt.Displayname, attempt.Password)
+	return err
 }
