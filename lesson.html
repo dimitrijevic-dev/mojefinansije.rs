@@ -1237,16 +1237,27 @@
             }
         }
         
-        // Update course progress
-        async function updateCourseProgress(currentLessonId) {
-            const totalLessons = await getLessonCount();
-            const currentLesson = parseInt(currentLessonId);
-            const progressPercent = Math.round((currentLesson / totalLessons) * 100);
-            
-            document.getElementById('courseProgressPercent').textContent = `${progressPercent}%`;
-            document.getElementById('courseProgress').style.width = `${progressPercent}%`;
-            
-            console.log(`📈 Course progress: ${currentLesson}/${totalLessons} = ${progressPercent}%`);
+        // Update course progress based on completed lessons
+        async function updateCourseProgress() {
+            try {
+                const [completedLessons, totalLessons] = await Promise.all([
+                    fetchCompletedLessons(),
+                    getLessonCount()
+                ]);
+                
+                const completedCount = completedLessons.length;
+                const progressPercent = Math.round((completedCount / totalLessons) * 100);
+                
+                document.getElementById('courseProgressPercent').textContent = `${progressPercent}%`;
+                document.getElementById('courseProgress').style.width = `${progressPercent}%`;
+                
+                console.log(`📈 Course progress: ${completedCount}/${totalLessons} completed (${progressPercent}%)`);
+            } catch (error) {
+                console.error('❌ Error updating course progress:', error);
+                // Fallback to 0% if there's an error
+                document.getElementById('courseProgressPercent').textContent = '0%';
+                document.getElementById('courseProgress').style.width = '0%';
+            }
         }
         
         // Preload flashcards for current lesson
@@ -1414,7 +1425,7 @@
                 updateFlashcardsButton(lessonId);
                 
                 // Update course progress
-                updateCourseProgress(lessonId);
+                updateCourseProgress();
                 
                 // Preload flashcards in background
                 preloadFlashcards(lessonId);

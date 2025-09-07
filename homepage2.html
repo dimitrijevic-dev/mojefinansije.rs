@@ -551,14 +551,14 @@
                             </div>
                             <div class="stat-item">
                                 <span class="stat-number">75%</span>
-                                <span class="stat-label">Napredak kursa</span>
+                                <span class="stat-label">Napredak</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">12</span>
+                                <span class="stat-number">0</span>
                                 <span class="stat-label">Dani učenja</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">2.5h</span>
+                                <span class="stat-number">0h</span>
                                 <span class="stat-label">Vreme provedeno</span>
                             </div>
                         </div>
@@ -575,42 +575,8 @@
                         <a href="lessons.html" class="view-all">Pogledaj sve</a>
                     </div>
                     
-                    <div class="lesson-list">
-                        <div class="lesson-item" onclick="goToLesson(1)" data-lesson-id="1">
-                            <div class="lesson-icon">📚</div>
-                            <div class="lesson-info">
-                                <div class="lesson-title">Šta je finansijska pismenost i zašto ti treba?</div>
-                                <div class="lesson-meta">Lesson 1 • 15 min read</div>
-                            </div>
-                            <div class="lesson-progress">
-                                <div class="lesson-progress-fill" style="width: 0%"></div>
-                            </div>
-                            <div class="lesson-completion-icon" style="display: none; color: var(--success-green); font-size: 24px; margin-left: 10px;">✓</div>
-                        </div>
-                        
-                        <div class="lesson-item" onclick="goToLesson(2)" data-lesson-id="2">
-                            <div class="lesson-icon">💰</div>
-                            <div class="lesson-info">
-                                <div class="lesson-title">Budžetiranje za početak karijere</div>
-                                <div class="lesson-meta">Lesson 2 • 12 min read</div>
-                            </div>
-                            <div class="lesson-progress">
-                                <div class="lesson-progress-fill" style="width: 0%"></div>
-                            </div>
-                            <div class="lesson-completion-icon" style="display: none; color: var(--success-green); font-size: 24px; margin-left: 10px;">✓</div>
-                        </div>
-                        
-                        <div class="lesson-item" onclick="goToLesson(3)" data-lesson-id="3">
-                            <div class="lesson-icon">📊</div>
-                            <div class="lesson-info">
-                                <div class="lesson-title">Planiranje finansijskih ciljeva</div>
-                                <div class="lesson-meta">Lesson 3 • 18 min read</div>
-                            </div>
-                            <div class="lesson-progress">
-                                <div class="lesson-progress-fill" style="width: 0%"></div>
-                            </div>
-                            <div class="lesson-completion-icon" style="display: none; color: var(--success-green); font-size: 24px; margin-left: 10px;">✓</div>
-                        </div>
+                    <div class="lesson-list" id="lessonList">
+                        <!-- Lessons will be populated dynamically -->
                     </div>
                 </section>
                 
@@ -681,6 +647,91 @@
             }
         }
         
+        // Fetch total lesson count from API
+        async function fetchTotalLessonCount() {
+            try {
+                const response = await fetch('http://localhost:8080/lessons/count', {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const count = await response.json();
+                console.log('✅ Fetched total lesson count:', count);
+                return count;
+            } catch (error) {
+                console.error('❌ Error fetching total lesson count:', error);
+                return 3; // Default fallback
+            }
+        }
+        
+        // Fetch all lessons from search API
+        async function fetchAllLessons() {
+            try {
+                const response = await fetch('http://localhost:8080/lessons/search', {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const lessons = await response.json();
+                console.log('✅ Fetched all lessons from search API:', lessons);
+                return lessons || [];
+            } catch (error) {
+                console.error('❌ Error fetching lessons from search API:', error);
+                return [];
+            }
+        }
+        
+        // Get lesson icon based on ID or content
+        function getLessonIcon(lesson) {
+            const iconMap = {
+                1: "📚",
+                2: "💰", 
+                3: "📊",
+                4: "💡"
+            };
+            return iconMap[lesson.id] || "📖";
+        }
+        
+        // Get incomplete lessons (lessons that are not in completed list)
+        async function getIncompleteLessons() {
+            try {
+                const [completedLessons, allLessons] = await Promise.all([
+                    fetchCompletedLessons(),
+                    fetchAllLessons()
+                ]);
+                
+                const completedIds = completedLessons.map(lesson => lesson.id);
+                
+                // Filter out completed lessons and add UI metadata
+                const incompleteLessons = allLessons
+                    .filter(lesson => !completedIds.includes(lesson.id))
+                    .map(lesson => ({
+                        id: lesson.id,
+                        title: lesson.title,
+                        icon: getLessonIcon(lesson),
+                        meta: `Lesson ${lesson.id} • 15 min read`
+                    }));
+                
+                // Return top 3 incomplete lessons
+                return incompleteLessons.slice(0, 3);
+            } catch (error) {
+                console.error('❌ Error getting incomplete lessons:', error);
+                return [];
+            }
+        }
+        
         // Check if user is authenticated
         function checkAuthentication() {
             const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
@@ -733,39 +784,119 @@
             }
         });
         
-        // Mark completed lessons in the UI
-        async function markCompletedLessons() {
+        // Populate lesson list with incomplete lessons
+        async function populateLessonList() {
             try {
-                const completedLessons = await fetchCompletedLessons();
-                const completedIds = completedLessons.map(lesson => lesson.id.toString());
+                const incompleteLessons = await getIncompleteLessons();
+                const lessonListContainer = document.getElementById('lessonList');
                 
-                // Update lesson items on homepage
-                document.querySelectorAll('.lesson-item[data-lesson-id]').forEach(lessonItem => {
-                    const lessonId = lessonItem.getAttribute('data-lesson-id');
-                    const completionIcon = lessonItem.querySelector('.lesson-completion-icon');
-                    const progressFill = lessonItem.querySelector('.lesson-progress-fill');
-                    
-                    if (completedIds.includes(lessonId)) {
-                        // Show completion checkmark
-                        completionIcon.style.display = 'block';
-                        // Set progress to 100%
-                        progressFill.style.width = '100%';
-                        // Add completed styling
-                        lessonItem.style.opacity = '0.8';
-                        lessonItem.style.background = 'rgba(52, 199, 89, 0.05)';
-                    }
-                });
+                if (!lessonListContainer) {
+                    console.error('❌ Lesson list container not found');
+                    return;
+                }
                 
-                // Update stats with real completed count
+                if (incompleteLessons.length === 0) {
+                    lessonListContainer.innerHTML = `
+                        <div style="text-align: center; padding: var(--spacing-xl); color: var(--warm-gray);">
+                            🎉 Čestitamo! Završili ste sve dostupne lekcije!
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // Create HTML for each incomplete lesson
+                const lessonsHTML = incompleteLessons.map(lesson => `
+                    <div class="lesson-item" onclick="goToLesson(${lesson.id})" data-lesson-id="${lesson.id}">
+                        <div class="lesson-icon">${lesson.icon}</div>
+                        <div class="lesson-info">
+                            <div class="lesson-title">${lesson.title}</div>
+                            <div class="lesson-meta">${lesson.meta}</div>
+                        </div>
+                        <div class="lesson-progress">
+                            <div class="lesson-progress-fill" style="width: 0%"></div>
+                        </div>
+                        <div class="lesson-completion-icon" style="display: none; color: var(--success-green); font-size: 24px; margin-left: 10px;">✓</div>
+                    </div>
+                `).join('');
+                
+                lessonListContainer.innerHTML = lessonsHTML;
+                
+                console.log(`✅ Populated lesson list with ${incompleteLessons.length} incomplete lessons`);
+            } catch (error) {
+                console.error('❌ Error populating lesson list:', error);
+            }
+        }
+        
+        // Update stats with completed lesson count and progress percentage
+        async function updateStats() {
+            try {
+                const [completedLessons, totalCount] = await Promise.all([
+                    fetchCompletedLessons(),
+                    fetchTotalLessonCount()
+                ]);
+                
                 const completedCount = completedLessons.length;
+                const progressPercent = Math.round((completedCount / totalCount) * 100);
+                
+                // Update completed lessons count
                 const statNumber = document.querySelector('.stat-item .stat-number');
                 if (statNumber) {
                     statNumber.textContent = completedCount.toString();
                 }
                 
-                console.log(`✅ Marked ${completedCount} lessons as completed on homepage`);
+                // Update progress percentage (second stat item)
+                const statNumbers = document.querySelectorAll('.stat-item .stat-number');
+                if (statNumbers.length >= 2) {
+                    statNumbers[1].textContent = `${progressPercent}%`;
+                }
+                
+                console.log(`✅ Updated stats: ${completedCount}/${totalCount} completed (${progressPercent}%)`);
             } catch (error) {
-                console.error('❌ Error marking completed lessons:', error);
+                console.error('❌ Error updating stats:', error);
+            }
+        }
+        
+        // Get the first incomplete lesson ID
+        async function getFirstIncompleteLesson() {
+            try {
+                const incompleteLessons = await getIncompleteLessons();
+                return incompleteLessons.length > 0 ? incompleteLessons[0].id : 1;
+            } catch (error) {
+                console.error('❌ Error getting first incomplete lesson:', error);
+                return 1; // Default fallback
+            }
+        }
+        
+        // Update quick actions and navigation with dynamic lesson links
+        async function updateQuickActions() {
+            try {
+                const firstIncompleteId = await getFirstIncompleteLesson();
+                
+                // Update quick action buttons
+                const actionButtons = document.querySelectorAll('a[href="lesson.html?id=3"]');
+                actionButtons.forEach(button => {
+                    if (button.textContent.includes('Nastavi trenutnu lekciju')) {
+                        button.href = `lesson.html?id=${firstIncompleteId}`;
+                    } else if (button.textContent.includes('EurekAI sesija')) {
+                        button.href = `flashcards.html?id=${firstIncompleteId}`;
+                        button.querySelector('.action-text').textContent = 'Flash card session';
+                        button.querySelector('.action-icon').textContent = '🃏';
+                    }
+                });
+                
+                // Update navigation bar links
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => {
+                    if (link.textContent.includes('Nastavi učenje')) {
+                        link.href = `lesson.html?id=${firstIncompleteId}`;
+                    } else if (link.textContent.includes('EurekAI')) {
+                        link.href = `flashcards.html?id=${firstIncompleteId}`;
+                    }
+                });
+                
+                console.log(`✅ Updated quick actions and navigation to use lesson ${firstIncompleteId}`);
+            } catch (error) {
+                console.error('❌ Error updating quick actions:', error);
             }
         }
 
@@ -792,8 +923,14 @@
                 document.getElementById('welcomeName').textContent = emailName;
             }
             
-            // Mark completed lessons
-            markCompletedLessons();
+            // Populate lesson list with incomplete lessons
+            populateLessonList();
+            
+            // Update stats
+            updateStats();
+            
+            // Update quick actions
+            updateQuickActions();
             
             // Add fade-in animations
             setTimeout(() => {
