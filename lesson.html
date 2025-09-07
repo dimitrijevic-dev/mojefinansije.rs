@@ -940,11 +940,11 @@
                         </div>
                         <div class="progress-item">
                             <div class="progress-label">
-                                <span>Napredak kursa</span>
-                                <span>25%</span>
+                                <span>Napredak</span>
+                                <span id="courseProgressPercent">0%</span>
                             </div>
                             <div class="progress-bar">
-                                <div class="progress-fill" style="width: 25%"></div>
+                                <div class="progress-fill" style="width: 0%" id="courseProgress"></div>
                             </div>
                         </div>
                         <div class="progress-item">
@@ -1129,6 +1129,43 @@
             }).join('');
         }
         
+        // Get total lesson count from API
+        async function getLessonCount() {
+            try {
+                console.log('📊 Fetching lesson count from API...');
+                const response = await fetch(`${API_BASE_URL}/lessons/count`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                const count = typeof data === 'number' ? data : data.count || data.total || 1;
+                console.log('✅ Total lessons:', count);
+                return count;
+            } catch (error) {
+                console.error('❌ Error fetching lesson count:', error);
+                return 1; // Fallback to 1 to avoid division by zero
+            }
+        }
+        
+        // Update course progress
+        async function updateCourseProgress(currentLessonId) {
+            const totalLessons = await getLessonCount();
+            const currentLesson = parseInt(currentLessonId);
+            const progressPercent = Math.round((currentLesson / totalLessons) * 100);
+            
+            document.getElementById('courseProgressPercent').textContent = `${progressPercent}%`;
+            document.getElementById('courseProgress').style.width = `${progressPercent}%`;
+            
+            console.log(`📈 Course progress: ${currentLesson}/${totalLessons} = ${progressPercent}%`);
+        }
+        
         // Update Next Lesson button URL
         function updateNextLessonButton(currentLessonId) {
             const nextLessonButton = document.getElementById('nextLessonButton');
@@ -1214,6 +1251,9 @@
                 
                 // Update Next Lesson button
                 updateNextLessonButton(lessonId);
+                
+                // Update course progress
+                updateCourseProgress(lessonId);
                 
                 console.log('✨ Showing lesson content...');
                 
