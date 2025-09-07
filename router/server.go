@@ -29,8 +29,22 @@ func Start() {
 	router.POST("/lessons/new", newLesson)
 	router.GET("/lessons/count", countLessons)
 	router.GET("/lessons/flashcards/:id", generateFlashcards)
+	router.POST("/lessons/:id/read", readLesson)
+	router.GET("/lessons/:id/read", getRead)
 
 	router.Run("localhost:8080")
+}
+
+func getRead(c *gin.Context) {
+	var attempt persistence.EmailAttempt
+	c.BindJSON(&attempt)
+	c.IndentedJSON(http.StatusOK, persistence.GetReadLessons(attempt.Email))
+}
+
+func readLesson(c *gin.Context) {
+	var attempt persistence.ReadAttempt
+	c.BindJSON(&attempt)
+	c.IndentedJSON(http.StatusOK, persistence.ReadLesson(attempt))
 }
 
 func newLesson(c *gin.Context) {

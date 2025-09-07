@@ -9,6 +9,15 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
+type EmailAttempt struct {
+	Email string `json:"email"`
+}
+
+type ReadAttempt struct {
+	Email    string `json:"email"`
+	Lessonid string `json:"lessonid"`
+}
+
 type LessonAttempt struct {
 	Title     string `json:"title"`
 	Body      string `json:"body"`
@@ -104,6 +113,26 @@ func AddUser(attempt UserSignup) error {
 	query := `INSERT INTO users (email, displayname, password) VALUES ($1,$2,$3)`
 
 	_, err := conn.Exec(context.Background(), query, attempt.Email, attempt.Displayname, config.Sha256(attempt.Password))
+	return err
+}
+
+func GetReadLessons(email string) []Lesson {
+	query := `SELECT (id, title,body,video_url) FROM lessons l CROSS JOIN 
+	user_lessons u WHERE l.id = u.lessonid HAVING u.email = $1`
+
+	var arr []Lesson
+	err := pgxscan.Select(context.Background(), conn, &arr, query, email)
+	if err != nil {
+		log.Fatalf("Error reading read lessons! ", err)
+	}
+
+	return arr
+}
+
+func ReadLesson(attempt ReadAttempt) error {
+	query := `INSERT INTO user_lessons (email, lessonid) VALUES ($1, $2)`
+
+	_, err := conn.Exec(context.Background(), query, attempt.Email, attempt.Lessonid)
 	return err
 }
 
