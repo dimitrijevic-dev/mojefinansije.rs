@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Izaberite plan koji odgovara vašim potrebama za finansijsku pismenost na MojeFinansije">
+    <meta name="keywords" content="cene, planovi, premium, finansijska pismenost, MojeFinansije">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Cene - MojeFinansije">
+    <meta property="og:description" content="Izaberite plan koji odgovara vašim potrebama za finansijsku pismenost">
+    <meta property="og:image" content="https://mojefinansije.rs/og-image.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cene - MojeFinansije">
+    <meta name="twitter:description" content="Izaberite plan koji odgovara vašim potrebama za finansijsku pismenost">
+    <meta name="twitter:image" content="https://mojefinansije.rs/twitter-image.jpg">
+    
+    <title>Cene - MojeFinansije</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables - Apple-Inspired Design System */
+        :root {
+            /* Colors */
+            --mocha-mousse: #A0826D;
+            --system-black: #000000;
+            --system-white: #FFFFFF;
+            --apple-blue: #007AFF;
+            --warm-gray: #8E8E93;
+            --light-gray: #F2F2F7;
+            --success-green: #34C759;
+            --warning-orange: #FF9500;
+            --error-red: #FF3B30;
+            --premium-gold: #FFD700;
+            --premium-gradient: linear-gradient(135deg, #FFD700, #FFA500);
+            
+            /* Spacing - 8pt Grid */
+            --spacing-micro: 4px;
+            --spacing-small: 8px;
+            --spacing-medium: 16px;
+            --spacing-large: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --spacing-xxxl: 64px;
+            
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            
+            /* Shadows */
+            --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 16px 64px rgba(0, 0, 0, 0.15);
+            --shadow-premium: 0 20px 40px rgba(255, 215, 0, 0.3);
+            
+            /* Border Radius */
+            --radius-small: 8px;
+            --radius-medium: 12px;
+            --radius-large: 16px;
+            --radius-xl: 24px;
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--system-black);
+            background: var(--system-white);
+            overflow-x: hidden;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-large);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--apple-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--system-black);
+            font-weight: 500;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--apple-blue);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--apple-blue);
+            transition: width 0.2s ease;
+        }
+        
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: var(--spacing-medium);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--system-black);
+            border: 1px solid var(--warm-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            border-color: var(--apple-blue);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--apple-blue), #0056CC);
+            color: var(--system-white);
+            box-shadow: 0 4px 14px rgba(0, 122, 255, 0.25);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+        
+        .btn-premium {
+            background: var(--premium-gradient);
+            color: var(--system-black);
+            font-weight: 600;
+            box-shadow: var(--shadow-premium);
+            border: 2px solid transparent;
+        }
+        
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(255, 215, 0, 0.4);
+            border-color: var(--premium-gold);
+        }
+        
+        /* Main Content */
+        .main {
+            padding-top: 100px;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-xl) var(--spacing-large);
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+            margin-bottom: var(--spacing-xl);
+            font-size: 14px;
+            color: var(--warm-gray);
+        }
+        
+        .breadcrumb a {
+            color: var(--apple-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: #0056CC;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-separator {
+            color: var(--warm-gray);
+            margin: 0 var(--spacing-small);
+        }
+        
+        /* Header Section */
+        .pricing-header {
+            text-align: center;
+            margin-bottom: var(--spacing-xxxl);
+        }
+        
+        .pricing-title {
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-medium);
+            background: linear-gradient(135deg, var(--system-black) 0%, var(--apple-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .pricing-subtitle {
+            font-size: 18px;
+            color: var(--warm-gray);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-xl);
+        }
+        
+        /* Pricing Cards */
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: var(--spacing-xl);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-large);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .pricing-card.premium {
+            border-color: var(--premium-gold);
+            box-shadow: var(--shadow-premium);
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(255, 165, 0, 0.05) 100%);
+        }
+        
+        .pricing-card.premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--premium-gradient);
+        }
+        
+        .popular-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--premium-gradient);
+            color: var(--system-black);
+            padding: 8px 40px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transform: rotate(45deg);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        .plan-header {
+            text-align: center;
+            margin-bottom: var(--spacing-large);
+        }
+        
+        .plan-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto var(--spacing-medium);
+            border-radius: var(--radius-large);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            background: var(--light-gray);
+        }
+        
+        .premium .plan-icon {
+            background: var(--premium-gradient);
+        }
+        
+        .plan-name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-small);
+        }
+        
+        .plan-price {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: var(--spacing-micro);
+        }
+        
+        .plan-period {
+            font-size: 14px;
+            color: var(--warm-gray);
+            margin-bottom: var(--spacing-medium);
+        }
+        
+        .plan-description {
+            font-size: 16px;
+            color: var(--warm-gray);
+            line-height: 1.5;
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: var(--spacing-large) 0;
+        }
+        
+        .features-list li {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
+            padding: var(--spacing-medium) 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+        
+        .feature-included {
+            background: var(--success-green);
+            color: var(--system-white);
+        }
+        
+        .feature-premium {
+            background: var(--premium-gradient);
+            color: var(--system-black);
+        }
+        
+        .feature-excluded {
+            background: var(--light-gray);
+            color: var(--warm-gray);
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            margin-top: var(--spacing-xxxl);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .faq-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius-large);
+            margin-bottom: var(--spacing-medium);
+            overflow: hidden;
+            box-shadow: var(--shadow-small);
+        }
+        
+        .faq-question {
+            width: 100%;
+            padding: var(--spacing-large);
+            background: transparent;
+            border: none;
+            text-align: left;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s ease;
+        }
+        
+        .faq-question:hover {
+            background: var(--light-gray);
+        }
+        
+        .faq-answer {
+            padding: 0 var(--spacing-large) var(--spacing-large);
+            color: var(--warm-gray);
+            line-height: 1.6;
+            display: none;
+        }
+        
+        .faq-answer.active {
+            display: block;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: var(--spacing-large) var(--spacing-medium);
+            }
+            
+            .pricing-cards {
+                grid-template-columns: 1fr;
+                max-width: none;
+            }
+            
+            .popular-badge {
+                display: none;
+            }
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav" role="navigation" aria-label="Main navigation">
+            <a href="index.html" class="logo" aria-label="MojeFinansije Početna">
+                💰 MojeFinansije
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="homepage2.html">Početna</a></li>
+                <li><a href="lessons.html">Lekcije</a></li>
+                <li><a href="lesson.html?id=3">Nastavi učenje</a></li>
+                <li><a href="lesson.html?id=3">EurekAI</a></li>
+                <li><a href="upload.html">Otpremi Lekciju</a></li>
+                <li><a href="pricing.html">Planovi</a></li>
+            </ul>
+            
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-secondary" role="button">Prijavi se</a>
+                <a href="register.html" class="btn btn-primary" role="button">Registruj se</a>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="main">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="index.html">Početna</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Cene</span>
+            </nav>
+            
+            <!-- Header Section -->
+            <div class="pricing-header fade-in">
+                <h1 class="pricing-title">Izaberite svoj plan</h1>
+                <p class="pricing-subtitle">Počnite besplatno ili otključajte sve mogućnosti sa Premium planom</p>
+            </div>
+            
+            <!-- Pricing Cards -->
+            <div class="pricing-cards">
+                <!-- Free Plan -->
+                <div class="pricing-card fade-in" style="animation-delay: 0.1s;">
+                    <div class="plan-header">
+                        <div class="plan-icon">📚</div>
+                        <h2 class="plan-name">Besplatno</h2>
+                        <div class="plan-price">0€</div>
+                        <div class="plan-period">mesečno</div>
+                        <p class="plan-description">Savršeno za početak vašeg putovanja finansijske pismenosti</p>
+                    </div>
+                    
+                    <ul class="features-list">
+                        <li>
+                            <span class="feature-icon feature-included">✓</span>
+                            Pristup osnovnim lekcijama (do 10)
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-included">✓</span>
+                            Osnovno EurekAI asistenta
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-included">✓</span>
+                            XP sistem i achievement-i
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-included">✓</span>
+                            Osnovni progress tracking
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-excluded">✗</span>
+                            Premium lekcije
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-excluded">✗</span>
+                            Brzži AI odgovori
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-excluded">✗</span>
+                            Personalizovane putanje učenja
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-excluded">✗</span>
+                            Prioritetna podrška
+                        </li>
+                    </ul>
+                    
+                    <a href="#" class="btn btn-secondary" style="width: 100%;" onclick="startFree()">Počni besplatno</a>
+                </div>
+                
+                <!-- Premium Plan -->
+                <div class="pricing-card premium fade-in" style="animation-delay: 0.2s;">
+                    <div class="popular-badge">Najpopularnije</div>
+                    <div class="plan-header">
+                        <div class="plan-icon">👑</div>
+                        <h2 class="plan-name">Premium</h2>
+                        <div class="plan-price">9.99€</div>
+                        <div class="plan-period">mesečno</div>
+                        <p class="plan-description">Kompletno iskustvo za ozbiljne učenike finansijske pismenosti</p>
+                    </div>
+                    
+                    <ul class="features-list">
+                        <li>
+                            <span class="feature-icon feature-premium">✓</span>
+                            Pristup svim lekcijama (50+)
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-premium">✓</span>
+                            Ekskluzivne premium lekcije
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-premium">⚡</span>
+                            Brzži EurekAI (5x brži odgovori)
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-premium">🎯</span>
+                            Personalizovane putanje učenja
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-premium">🏆</span>
+                            Napredni XP sistem i ekskluzivni achievement-i
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-premium">📊</span>
+                            Detaljnu analitiku napretka
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-premium">💬</span>
+                            Prioritetna podrška (24/7)
+                        </li>
+                        <li>
+                            <span class="feature-icon feature-premium">📱</span>
+                            Mobilna aplikacija (uskoro)
+                        </li>
+                    </ul>
+                    
+                    <a href="#" class="btn btn-premium" style="width: 100%;" onclick="upgradeToPremium()">Nadgradi na Premium</a>
+                </div>
+            </div>
+            
+            <!-- FAQ Section -->
+            <div class="faq-section fade-in" style="animation-delay: 0.3s;">
+                <h2 class="faq-title">Često postavljana pitanja</h2>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Mogu li da promenim plan u bilo kom trenutku?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Da, možete nadgraditi na Premium plan ili se vratiti na besplatni plan u bilo kom trenutku. Promene će biti primenjen odmah, a naplaćivanje će biti srazmerno.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Šta se dešava sa mojim napretkom ako se vratim na besplatni plan?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Vaš napredak ostaje sačuvan. Međutim, nećete moći pristupiti premium lekcijama i funkcijama dok se ne vratite na Premium plan.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Da li postoji godišnji popust?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Trenutno nudimo mesečno naplaćivanje. Godišnji planovi sa popustom će biti dostupni uskoro. Pratite naše obaveštenja za najnovije informacije.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Kako funkcionišu personalizovane putanje učenja?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Premium korisnici dobijaju prilagođene preporuke za lekcije na osnovu njihovih ciljeva, trenutnog znanja i napretka. AI sistem analizira vaše učenje i predlaže optimalne sledeće korake.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(this)">
+                        Koliko je brži Premium EurekAI?
+                        <span>+</span>
+                    </button>
+                    <div class="faq-answer">
+                        Premium korisnici dobijaju prioritet u obradi zahteva, što rezultuje 5x bržim odgovorima. Prosečno vreme odgovora je manje od 2 sekunde umesto 10+ sekundi za besplatne korisnike.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8080';
+        
+        // Check if user is authenticated and update header
+        function checkAuthentication() {
+            const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn');
+            
+            if (userData && isLoggedIn === 'true') {
+                return JSON.parse(userData);
+            }
+            
+            return null;
+        }
+        
+        // Calculate XP and level from completed lessons
+        function calculateXP(completedLessons) {
+            const totalXP = completedLessons.length * 50;
+            const level = Math.floor(totalXP / 100);
+            const currentXP = totalXP % 100;
+            
+            return {
+                level: level,
+                currentXP: currentXP,
+                progress: currentXP // percentage out of 100
+            };
+        }
+        
+        // Update header for logged-in user
+        async function updateHeaderForLoggedInUser(user) {
+            const authButtons = document.querySelector('.auth-buttons');
+            
+            // Get completed lessons for XP calculation
+            const completedLessons = await fetchCompletedLessons();
+            const xpData = calculateXP(completedLessons);
+            
+            // Create user dropdown HTML with XP bar
+            authButtons.innerHTML = `
+                <div class="user-menu" style="position: relative; display: flex; align-items: center; gap: var(--spacing-medium);">
+                    <div class="xp-container" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-micro);">
+                        <div class="xp-level" style="font-size: 12px; font-weight: 600; color: var(--apple-blue);">Level ${xpData.level}</div>
+                        <div class="xp-bar" style="width: 80px; height: 8px; background: var(--light-gray); border-radius: 4px; overflow: hidden; border: 1px solid rgba(0, 122, 255, 0.2);">
+                            <div class="xp-fill" style="height: 100%; background: linear-gradient(90deg, var(--apple-blue), var(--success-green)); border-radius: 4px; transition: width 0.8s ease; width: ${xpData.progress}%;"></div>
+                        </div>
+                    </div>
+                    <div class="user-icon" onclick="toggleUserDropdown()" style="width: 40px; height: 40px; background: var(--light-gray); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; font-size: 18px;">
+                        <span>👤</span>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown" style="position: absolute; top: 100%; right: 0; margin-top: 8px; background: var(--system-white); border-radius: var(--radius-medium); box-shadow: var(--shadow-large); border: 1px solid var(--light-gray); min-width: 200px; z-index: 1000; display: none;">
+                        <a href="profile.html" class="dropdown-item" style="display: block; padding: var(--spacing-medium); color: var(--system-black); text-decoration: none; font-size: 14px; transition: background 0.2s ease;">Korisnički profil</a>
+                        <div class="dropdown-divider" style="height: 1px; background: var(--light-gray); margin: 0;"></div>
+                        <a href="#" class="dropdown-item" onclick="logout()" style="display: block; padding: var(--spacing-medium); color: var(--system-black); text-decoration: none; font-size: 14px; transition: background 0.2s ease;">Odjavi se</a>
+                    </div>
+                </div>
+            `;
+            
+            console.log('👤 Updated header for logged-in user:', user.email);
+            console.log('🎯 XP podaci:', xpData);
+        }
+        
+        // Toggle user dropdown
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (userMenu && dropdown && !userMenu.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Logout function
+        function logout() {
+            // Clear authentication data
+            localStorage.removeItem('userData');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('rememberMe');
+            sessionStorage.removeItem('userData');
+            sessionStorage.removeItem('isLoggedIn');
+            
+            console.log('🔓 User logged out');
+            
+            // Redirect to login page
+            window.location.href = 'login.html';
+        }
+        
+        // Fetch all lessons for navigation
+        async function fetchAllLessons() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/lessons`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const lessons = await response.json();
+                return Array.isArray(lessons) ? lessons : [];
+            } catch (error) {
+                console.error('❌ Error fetching all lessons:', error);
+                return [];
+            }
+        }
+        
+        // Fetch completed lessons from API
+        async function fetchCompletedLessons() {
+            try {
+                const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+                if (!userData) return [];
+                
+                const user = JSON.parse(userData);
+                const response = await fetch(`${API_BASE_URL}/lessons/read/${user.email}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const completedLessons = await response.json();
+                return completedLessons || [];
+            } catch (error) {
+                console.error('❌ Error fetching completed lessons:', error);
+                return [];
+            }
+        }
+        
+        // Get the first incomplete lesson ID
+        async function getFirstIncompleteLesson() {
+            try {
+                const [completedLessons, allLessons] = await Promise.all([
+                    fetchCompletedLessons(),
+                    fetchAllLessons()
+                ]);
+                
+                const completedIds = completedLessons.map(lesson => lesson.id);
+                const incompleteLessons = allLessons.filter(lesson => !completedIds.includes(lesson.id));
+                
+                return incompleteLessons.length > 0 ? incompleteLessons[0].id : 1;
+            } catch (error) {
+                console.error('❌ Error getting first incomplete lesson:', error);
+                return 1; // Default fallback
+            }
+        }
+        
+        // Update navigation with dynamic lesson links
+        async function updateNavigation() {
+            try {
+                const firstIncompleteId = await getFirstIncompleteLesson();
+                
+                // Update navigation bar links
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => {
+                    if (link.textContent.includes('Nastavi učenje')) {
+                        link.href = `lesson.html?id=${firstIncompleteId}`;
+                    }
+                });
+                
+                console.log(`✅ Updated navigation to use lesson ${firstIncompleteId}`);
+            } catch (error) {
+                console.error('❌ Error updating navigation:', error);
+            }
+        }
+        
+        // Toggle FAQ
+        function toggleFAQ(button) {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('span');
+            
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                icon.textContent = '+';
+            } else {
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer.active').forEach(a => {
+                    a.classList.remove('active');
+                    a.previousElementSibling.querySelector('span').textContent = '+';
+                });
+                
+                answer.classList.add('active');
+                icon.textContent = '−';
+            }
+        }
+        
+        // Start free plan
+        function startFree() {
+            const user = checkAuthentication();
+            
+            if (user) {
+                // User is already logged in, redirect to dashboard
+                window.location.href = 'homepage2.html';
+            } else {
+                // User is not logged in, redirect to registration
+                window.location.href = 'register.html';
+            }
+        }
+        
+        // Upgrade to premium
+        function upgradeToPremium() {
+            const user = checkAuthentication();
+            
+            if (!user) {
+                alert('Molimo prijavite se da biste nadgradili na Premium plan.');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // For now, just show an alert. In a real app, this would integrate with payment processing
+            alert('🚧 Premium nadgradnja će uskoro biti dostupna!\n\nRadimo na integraciji sa sigurnim platnim sistemom. Pratite naša obaveštenja za najnovije informacije.');
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Check if user is logged in and update header accordingly
+            const user = checkAuthentication();
+            if (user) {
+                updateHeaderForLoggedInUser(user);
+            }
+            
+            // Update navigation with dynamic links
+            await updateNavigation();
+            
+            // Header scroll effect
+            let lastScrollTop = 0;
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const header = document.querySelector('.header');
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+                
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
+</body>
+</html>
