@@ -13,11 +13,6 @@ type EmailAttempt struct {
 	Email string `json:"email"`
 }
 
-type ReadAttempt struct {
-	Email    string `json:"email"`
-	Lessonid string `json:"lessonid"`
-}
-
 type LessonAttempt struct {
 	Title     string `json:"title"`
 	Body      string `json:"body"`
@@ -129,10 +124,10 @@ func GetReadLessons(email string) []Lesson {
 	return arr
 }
 
-func ReadLesson(attempt ReadAttempt) error {
+func ReadLesson(attempt EmailAttempt, id int) error {
 	query := `INSERT INTO user_lessons (email, lessonid) VALUES ($1, $2)`
 
-	_, err := conn.Exec(context.Background(), query, attempt.Email, attempt.Lessonid)
+	_, err := conn.Exec(context.Background(), query, attempt.Email, id)
 	return err
 }
 
