@@ -546,11 +546,11 @@
                         
                         <div class="welcome-stats">
                             <div class="stat-item">
-                                <span class="stat-number">3</span>
+                                <span class="stat-number">0</span>
                                 <span class="stat-label">Završene lekcije</span>
                             </div>
                             <div class="stat-item">
-                                <span class="stat-number">75%</span>
+                                <span class="stat-number">0%</span>
                                 <span class="stat-label">Napredak</span>
                             </div>
                             <div class="stat-item">
@@ -890,7 +890,7 @@
                     if (link.textContent.includes('Nastavi učenje')) {
                         link.href = `lesson.html?id=${firstIncompleteId}`;
                     } else if (link.textContent.includes('EurekAI')) {
-                        link.href = `flashcards.html?id=${firstIncompleteId}`;
+                        link.href = `lesson.html?id=${firstIncompleteId}`;
                     }
                 });
                 

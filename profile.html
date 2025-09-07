@@ -8,14 +8,14 @@
     
     <!-- Open Graph -->
     <meta property="og:title" content="Korisnički profil - MojeFinansije">
-    <meta property="og:description" content="Upravljajte vašim profilom i postavkama naloga">
+    <meta property="og:description" content="Pregled vašeg profila i postavki naloga">
     <meta property="og:image" content="https://mojefinansije.rs/og-image.jpg">
     <meta property="og:type" content="website">
     
     <!-- Twitter Cards -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Korisnički profil - MojeFinansije">
-    <meta name="twitter:description" content="Upravljajte vašim profilom i postavkama naloga">
+    <meta name="twitter:description" content="Pregled vašeg profila i postavki naloga">
     <meta name="twitter:image" content="https://mojefinansije.rs/twitter-image.jpg">
     
     <title>Korisnički profil - MojeFinansije</title>
@@ -406,6 +406,13 @@
             cursor: not-allowed;
         }
         
+        .form-input:read-only {
+            background: var(--system-white);
+            color: var(--system-black);
+            cursor: default;
+            border-color: var(--light-gray);
+        }
+        
         .form-hint {
             font-size: 12px;
             color: var(--warm-gray);
@@ -626,7 +633,7 @@
             <!-- Page Header -->
             <div class="page-header">
                 <h1 class="page-title">Korisnički profil</h1>
-                <p class="page-subtitle">Upravljajte vašim profilom i postavkama naloga</p>
+                <p class="page-subtitle">Pregled vašeg profila i postavki naloga</p>
             </div>
             
             <!-- Profile Card -->
@@ -651,81 +658,18 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label class="form-label" for="firstName">Ime</label>
-                            <input type="text" id="firstName" class="form-input" placeholder="Unesite vaše ime">
+                            <input type="text" id="firstName" class="form-input" readonly placeholder="Unesite vaše ime">
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label" for="lastName">Prezime</label>
-                            <input type="text" id="lastName" class="form-input" placeholder="Unesite vaše prezime">
+                            <input type="text" id="lastName" class="form-input" readonly placeholder="Unesite vaše prezime">
                         </div>
                         
                         <div class="form-group full-width">
                             <label class="form-label" for="email">Email adresa</label>
                             <input type="email" id="email" class="form-input" disabled placeholder="email@example.com">
-                            <span class="form-hint">Email adresa ne može biti promenjena</span>
                         </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary">Otkaži</button>
-                        <button type="button" class="btn btn-primary" onclick="updateProfile()">
-                            💾 Sačuvaj promene
-                        </button>
-                    </div>
-                </div>
-                
-                <!-- Password Change Section -->
-                <div class="form-section">
-                    <h3 class="section-title">
-                        <span class="section-icon">🔒</span>
-                        Promena lozinke
-                    </h3>
-                    
-                    <div id="passwordMessage" class="message"></div>
-                    
-                    <div class="form-grid">
-                        <div class="form-group full-width">
-                            <label class="form-label" for="currentPassword">Trenutna lozinka</label>
-                            <input type="password" id="currentPassword" class="form-input" placeholder="Unesite trenutnu lozinku">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="newPassword">Nova lozinka</label>
-                            <input type="password" id="newPassword" class="form-input" placeholder="Unesite novu lozinku">
-                            <div class="password-requirements">
-                                <div class="requirements-title">Lozinka mora da sadrži:</div>
-                                <ul class="requirements-list">
-                                    <li class="requirement-item">
-                                        <span class="requirement-icon invalid" id="lengthReq">✓</span>
-                                        Najmanje 8 karaktera
-                                    </li>
-                                    <li class="requirement-item">
-                                        <span class="requirement-icon invalid" id="uppercaseReq">✓</span>
-                                        Jedan veliki karakter
-                                    </li>
-                                    <li class="requirement-item">
-                                        <span class="requirement-icon invalid" id="lowercaseReq">✓</span>
-                                        Jedan mali karakter
-                                    </li>
-                                    <li class="requirement-item">
-                                        <span class="requirement-icon invalid" id="numberReq">✓</span>
-                                        Jedan broj
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-label" for="confirmPassword">Potvrdite novu lozinku</label>
-                            <input type="password" id="confirmPassword" class="form-input" placeholder="Ponovo unesite novu lozinku">
-                        </div>
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" onclick="clearPasswordForm()">Otkaži</button>
-                        <button type="button" class="btn btn-primary" id="changePasswordBtn" onclick="changePassword()" disabled>
-                            🔑 Promeni lozinku
-                        </button>
                     </div>
                 </div>
             </div>
@@ -757,9 +701,6 @@
                         <span>👤</span>
                     </div>
                     <div class="user-dropdown" id="userDropdown" style="display: none;">
-                        <div class="user-info">
-                            <span class="user-name">${user.email}</span>
-                        </div>
                         <div class="dropdown-divider"></div>
                         <a href="profile.html" class="dropdown-item">Korisnički profil</a>
                         <div class="dropdown-divider"></div>
@@ -828,90 +769,6 @@
             document.getElementById('email').value = user.email;
         }
         
-        // Password validation
-        function validatePassword() {
-            const password = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const changePasswordBtn = document.getElementById('changePasswordBtn');
-            
-            // Check requirements
-            const hasLength = password.length >= 8;
-            const hasUppercase = /[A-Z]/.test(password);
-            const hasLowercase = /[a-z]/.test(password);
-            const hasNumber = /\d/.test(password);
-            const passwordsMatch = password === confirmPassword && password.length > 0;
-            
-            // Update requirement indicators
-            document.getElementById('lengthReq').className = `requirement-icon ${hasLength ? 'valid' : 'invalid'}`;
-            document.getElementById('uppercaseReq').className = `requirement-icon ${hasUppercase ? 'valid' : 'invalid'}`;
-            document.getElementById('lowercaseReq').className = `requirement-icon ${hasLowercase ? 'valid' : 'invalid'}`;
-            document.getElementById('numberReq').className = `requirement-icon ${hasNumber ? 'valid' : 'invalid'}`;
-            
-            // Enable/disable submit button
-            const isValid = hasLength && hasUppercase && hasLowercase && hasNumber && passwordsMatch;
-            changePasswordBtn.disabled = !isValid;
-            
-            return isValid;
-        }
-        
-        // Update profile (placeholder - API not implemented)
-        function updateProfile() {
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            
-            if (!firstName || !lastName) {
-                alert('Molimo unesite ime i prezime');
-                return;
-            }
-            
-            // Simulate API call
-            console.log('Updating profile:', { firstName, lastName });
-            alert('Profil uspešno ažuriran! (Simulacija - API nije implementiran)');
-        }
-        
-        // Change password (placeholder - API not implemented)
-        function changePassword() {
-            const currentPassword = document.getElementById('currentPassword').value;
-            const newPassword = document.getElementById('newPassword').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-            const messageEl = document.getElementById('passwordMessage');
-            
-            if (!currentPassword) {
-                showMessage('Molimo unesite trenutnu lozinku', 'error');
-                return;
-            }
-            
-            if (!validatePassword()) {
-                showMessage('Molimo ispunite sve uslove za lozinku', 'error');
-                return;
-            }
-            
-            // Simulate API call
-            console.log('Changing password');
-            showMessage('Lozinka uspešno promenjena! (Simulacija - API nije implementiran)', 'success');
-            clearPasswordForm();
-        }
-        
-        // Show message
-        function showMessage(text, type) {
-            const messageEl = document.getElementById('passwordMessage');
-            messageEl.textContent = text;
-            messageEl.className = `message ${type}`;
-            messageEl.style.display = 'block';
-            
-            setTimeout(() => {
-                messageEl.style.display = 'none';
-            }, 5000);
-        }
-        
-        // Clear password form
-        function clearPasswordForm() {
-            document.getElementById('currentPassword').value = '';
-            document.getElementById('newPassword').value = '';
-            document.getElementById('confirmPassword').value = '';
-            document.getElementById('passwordMessage').style.display = 'none';
-            validatePassword();
-        }
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', () => {
@@ -926,10 +783,6 @@
             
             // Load user profile
             loadUserProfile(user);
-            
-            // Add password validation listeners
-            document.getElementById('newPassword').addEventListener('input', validatePassword);
-            document.getElementById('confirmPassword').addEventListener('input', validatePassword);
             
             // Add fade-in animation
             setTimeout(() => {
