@@ -28,6 +28,7 @@ func Start() {
 	router.GET("/lessons/search", getAll)
 	router.POST("/lessons/new", newLesson)
 	router.GET("/lessons/count", countLessons)
+	router.GET("/lessons/flashcards/:id", generateFlashcards)
 
 	router.Run("localhost:8080")
 }
@@ -91,4 +92,11 @@ func askGPT(c *gin.Context) {
 
 func countLessons(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, persistence.CountAll())
+}
+
+func generateFlashcards(c *gin.Context) {
+	idS := c.Param("id")
+	id, _ := strconv.Atoi(idS)
+
+	c.IndentedJSON(http.StatusOK, genai.GenerateFlashcards(id))
 }
