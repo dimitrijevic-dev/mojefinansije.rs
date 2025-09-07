@@ -112,13 +112,14 @@ func AddUser(attempt UserSignup) error {
 }
 
 func GetReadLessons(email string) []Lesson {
-	query := `SELECT (id, title,body,video_url) FROM lessons l CROSS JOIN 
-	user_lessons u WHERE l.id = u.lessonid HAVING u.email = $1`
+	query := `SELECT l.id, l.title, l.body, l.video_link FROM lessons l 
+	INNER JOIN user_lessons u ON l.id = u.lessonid WHERE u.email = $1`
 
 	var arr []Lesson
 	err := pgxscan.Select(context.Background(), conn, &arr, query, email)
 	if err != nil {
-		log.Fatalf("Error reading read lessons! ", err)
+		log.Printf("Error reading read lessons: %v", err)
+		return nil
 	}
 
 	return arr
@@ -141,7 +142,11 @@ func AddLesson(attempt LessonAttempt) error {
 func CountAll() int {
 	var count int
 	query := `SELECT COUNT(*) FROM lessons`
-	pgxscan.Get(context.Background(), conn, &count, query)
+	err := pgxscan.Get(context.Background(), conn, &count, query)
+	if err != nil {
+		log.Printf("Error counting lessons: %v", err)
+		return 0
+	}
 
 	return count
 }
