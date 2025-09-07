@@ -978,13 +978,7 @@
         
         // Open lesson page
         function openLesson(lessonId) {
-            // Create confetti when opening a lesson
-            createConfetti();
-            
-            // Small delay before navigation for confetti to show
-            setTimeout(() => {
-                window.location.href = `lesson.html?id=${lessonId}`;
-            }, 500);
+            window.location.href = `lesson.html?id=${lessonId}`;
         }
         
         // Render lessons to the grid
