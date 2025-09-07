@@ -1790,49 +1790,15 @@
         // Load welcome message from AI
         async function loadWelcomeMessage() {
             try {
-                const lessonId = getLessonId();
-                console.log('🤖 Loading welcome message from AI API for lesson:', lessonId);
-                
-                const response = await fetch(`${API_BASE_URL}/lessons/${lessonId}/ai`, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        prompt: "Predstavi se korisniku, reci ko si i koja je tvoja svrha."
-                    })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const aiResponse = await response.json();
-                console.log('✅ Welcome message received:', aiResponse);
-                
-                // Add AI welcome message
-                let responseText;
-                if (typeof aiResponse === 'string') {
-                    responseText = aiResponse;
-                } else if (aiResponse.response) {
-                    responseText = aiResponse.response;
-                } else if (aiResponse.message) {
-                    responseText = aiResponse.message;
-                } else if (aiResponse.data) {
-                    responseText = aiResponse.data;
-                } else {
-                    const values = Object.values(aiResponse);
-                    responseText = values.find(val => typeof val === 'string') || "Zdravo! Ja sam tvoj AI asistent za učenje.";
-                }
-                
-                // Remove loading indicator
+                // Remove loading indicator first
                 const welcomeLoader = document.getElementById('welcomeLoader');
                 if (welcomeLoader) {
                     welcomeLoader.remove();
                 }
                 
-                addMessage(responseText, false);
+                // Show a static welcome message instead of making API call
+                // This prevents the AI from introducing itself twice
+                addMessage("Zdravo! Ja sam EurekAI, tvoj AI asistent za finansijsku pismenost. Pitaj me šta god želiš o ovoj lekciji!", false);
                 
             } catch (error) {
                 console.error('❌ Error loading welcome message:', error);
