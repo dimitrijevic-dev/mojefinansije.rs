@@ -223,6 +223,42 @@
             gap: var(--spacing-medium);
         }
         
+        /* XP System */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
+        }
+        
+        .xp-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-micro);
+        }
+        
+        .xp-level {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--apple-blue);
+        }
+        
+        .xp-bar {
+            width: 120px;
+            height: 12px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+        }
+        
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--apple-blue), var(--success-green));
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        
         /* Main Content */
         .main {
             padding-top: 100px;
@@ -747,13 +783,36 @@
             return JSON.parse(userData);
         }
         
+        // Calculate XP and level from completed lessons
+        function calculateXP(completedLessons) {
+            const totalXP = completedLessons.length * 50;
+            const level = Math.floor(totalXP / 100);
+            const currentXP = totalXP % 100;
+            
+            return {
+                level: level,
+                currentXP: currentXP,
+                progress: currentXP // percentage out of 100
+            };
+        }
+        
         // Update header for logged-in user
-        function updateHeaderForLoggedInUser(user) {
+        async function updateHeaderForLoggedInUser(user) {
             const authButtons = document.querySelector('.auth-buttons');
             
-            // Create user dropdown HTML
+            // Get completed lessons for XP calculation
+            const completedLessons = await fetchCompletedLessons();
+            const xpData = calculateXP(completedLessons);
+            
+            // Create user dropdown HTML with XP bar
             authButtons.innerHTML = `
                 <div class="user-menu">
+                    <div class="xp-container">
+                        <div class="xp-level">Level ${xpData.level}</div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" style="width: ${xpData.progress}%"></div>
+                        </div>
+                    </div>
                     <div class="user-icon" onclick="toggleUserDropdown()">
                         <span>👤</span>
                     </div>
@@ -766,6 +825,7 @@
             `;
             
             console.log('👤 Ažuriran header za prijavljenog korisnika:', user.email);
+            console.log('🎯 XP podaci:', xpData);
         }
         
         // Toggle user dropdown
@@ -901,15 +961,15 @@
         }
 
         // Initialize dashboard
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', async function() {
             // Check if user is authenticated
             const user = checkAuthentication();
             if (!user) {
                 return; // Will redirect to login
             }
             
-            // Update header with user info
-            updateHeaderForLoggedInUser(user);
+            // Update header with user info (async for XP calculation)
+            await updateHeaderForLoggedInUser(user);
             
             // Update user info in welcome section
             if (user.displayname) {

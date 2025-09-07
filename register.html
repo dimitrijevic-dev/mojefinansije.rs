@@ -656,18 +656,7 @@ Dobrodošli! Preusmeravam vas na vašu kontrolnu tablu...
                         >
                         <div class="form-error" id="confirmPasswordError">Lozinke se ne poklapaju</div>
                         <div class="form-success" id="confirmPasswordSuccess">Lozinke se poklapaju</div>
-                    </div>
-                    
-                    
-                    <div class="checkbox-group">
-                        <input type="checkbox" id="terms" name="terms" class="checkbox" required>
-                        <label for="terms" class="checkbox-label">
-                            Slažem se sa <a href="#" target="_blank">Uslovima korišćenja</a> i 
-                            <a href="#" target="_blank">Politikom privatnosti</a><span class="required">*</span>
-                        </label>
-                        <div class="form-error" id="termsError">Morate se složiti sa uslovima i politikom privatnosti</div>
-                    </div>
-                    
+                    </div>                    
                     
                     <button type="submit" class="register-button" id="registerButton">
                         <span class="loading-spinner" id="loadingSpinner"></span>
@@ -691,8 +680,7 @@ Već imate nalog? <a href="login.html">Prijavite se</a>
                 fullName: document.getElementById('fullName'),
                 email: document.getElementById('email'),
                 password: document.getElementById('password'),
-                confirmPassword: document.getElementById('confirmPassword'),
-                terms: document.getElementById('terms')
+                confirmPassword: document.getElementById('confirmPassword')
             };
             const registerButton = document.getElementById('registerButton');
             const loadingSpinner = document.getElementById('loadingSpinner');
@@ -844,11 +832,6 @@ Već imate nalog? <a href="login.html">Prijavite se</a>
                 }
             });
             
-            inputs.terms.addEventListener('change', function() {
-                if (this.checked) {
-                    hideError('terms');
-                }
-            });
             
             // Form submission
             form.addEventListener('submit', async function(e) {
@@ -885,10 +868,6 @@ Već imate nalog? <a href="login.html">Prijavite se</a>
                     hasErrors = true;
                 }
                 
-                if (!data.terms) {
-                    showError('terms', 'Morate se složiti sa uslovima i politikom privatnosti');
-                    hasErrors = true;
-                }
                 
                 if (hasErrors) {
                     return;

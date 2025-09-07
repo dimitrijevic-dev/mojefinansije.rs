@@ -236,6 +236,42 @@
             background: var(--light-gray);
         }
         
+        /* XP System */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
+        }
+        
+        .xp-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-micro);
+        }
+        
+        .xp-level {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--apple-blue);
+        }
+        
+        .xp-bar {
+            width: 120px;
+            height: 12px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+        }
+        
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--apple-blue), var(--success-green));
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        
         /* Main Content */
         .main {
             padding-top: 100px;
@@ -610,8 +646,10 @@
             </a>
             
             <ul class="nav-links">
-                <li><a href="homepage2.html">Početna</a></li>
                 <li><a href="lessons.html">Lekcije</a></li>
+                <li><a href="lesson.html?id=3">Nastavi učenje</a></li>
+                <li><a href="lesson.html?id=3">EurekAI</a></li>
+                <li><a href="upload.html">Otpremi Lekciju</a></li>
             </ul>
             
             <div class="auth-buttons">
@@ -670,6 +708,16 @@
                             <label class="form-label" for="email">Email adresa</label>
                             <input type="email" id="email" class="form-input" disabled placeholder="email@example.com">
                         </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="userLevel">Level</label>
+                            <input type="text" id="userLevel" class="form-input" readonly placeholder="Loading...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label" for="userXP">Ukupno XP</label>
+                            <input type="text" id="userXP" class="form-input" readonly placeholder="Loading...">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -692,11 +740,21 @@
         }
         
         // Update header for logged-in user
-        function updateHeaderForLoggedInUser(user) {
+        async function updateHeaderForLoggedInUser(user) {
             const authButtons = document.querySelector('.auth-buttons');
+            
+            // Get completed lessons for XP calculation
+            const completedLessons = await fetchCompletedLessons();
+            const xpData = calculateXP(completedLessons);
             
             authButtons.innerHTML = `
                 <div class="user-menu">
+                    <div class="xp-container">
+                        <div class="xp-level">Level ${xpData.level}</div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" style="width: ${xpData.progress}%"></div>
+                        </div>
+                    </div>
                     <div class="user-icon" onclick="toggleUserDropdown()">
                         <span>👤</span>
                     </div>
@@ -708,6 +766,9 @@
                     </div>
                 </div>
             `;
+            
+            console.log('👤 Ažuriran header za prijavljenog korisnika:', user.email);
+            console.log('🎯 XP podaci:', xpData);
         }
         
         // Toggle user dropdown
@@ -738,6 +799,46 @@
             window.location.href = 'login.html';
         }
         
+        // Fetch completed lessons from API
+        async function fetchCompletedLessons() {
+            try {
+                const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+                if (!userData) return [];
+                
+                const user = JSON.parse(userData);
+                const response = await fetch(`http://localhost:8080/lessons/read/${user.email}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const completedLessons = await response.json();
+                console.log('✅ Fetched completed lessons:', completedLessons);
+                return completedLessons || [];
+            } catch (error) {
+                console.error('❌ Error fetching completed lessons:', error);
+                return [];
+            }
+        }
+        
+        // Calculate XP and level from completed lessons
+        function calculateXP(completedLessons) {
+            const totalXP = completedLessons.length * 50;
+            const level = Math.floor(totalXP / 100);
+            const currentXP = totalXP % 100;
+            
+            return {
+                level: level,
+                currentXP: currentXP,
+                progress: currentXP // percentage out of 100
+            };
+        }
+        
         // Get user initials for avatar
         function getUserInitials(name, email) {
             if (name) {
@@ -755,7 +856,7 @@
         }
         
         // Load user profile data
-        function loadUserProfile(user) {
+        async function loadUserProfile(user) {
             // Update profile header
             const fullName = user.displayname || user.fullName || user.email;
             document.getElementById('profileName').textContent = fullName;
@@ -767,22 +868,30 @@
             document.getElementById('firstName').value = nameParts[0] || '';
             document.getElementById('lastName').value = nameParts.slice(1).join(' ') || '';
             document.getElementById('email').value = user.email;
+            
+            // Get XP data and populate XP fields
+            const completedLessons = await fetchCompletedLessons();
+            const xpData = calculateXP(completedLessons);
+            const totalXP = completedLessons.length * 50;
+            
+            document.getElementById('userLevel').value = `Level ${xpData.level}`;
+            document.getElementById('userXP').value = `${totalXP} XP`;
         }
         
         
         // Initialize page
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Check authentication first
             const user = checkAuthentication();
             if (!user) {
                 return; // Will redirect to login
             }
             
-            // Update header with user info
-            updateHeaderForLoggedInUser(user);
+            // Update header with user info (async for XP calculation)
+            await updateHeaderForLoggedInUser(user);
             
             // Load user profile
-            loadUserProfile(user);
+            await loadUserProfile(user);
             
             // Add fade-in animation
             setTimeout(() => {

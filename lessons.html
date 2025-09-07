@@ -207,6 +207,9 @@
         /* User Menu */
         .user-menu {
             position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
         }
         
         .user-icon {
@@ -267,6 +270,109 @@
         
         .dropdown-item:hover {
             background: var(--light-gray);
+        }
+        
+        /* XP System */
+        .xp-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-micro);
+        }
+        
+        .xp-level {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--apple-blue);
+        }
+        
+        .xp-bar {
+            width: 80px;
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+        }
+        
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--apple-blue), var(--success-green));
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        
+        /* Confetti Animation - More Visible */
+        .confetti {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .confetti-piece {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--apple-blue);
+            animation: confetti-fall 4s linear infinite;
+        }
+
+        .confetti-piece:nth-child(2n) {
+            background: var(--success-green);
+            width: 14px;
+            height: 14px;
+            animation-delay: 0.2s;
+        }
+
+        .confetti-piece:nth-child(3n) {
+            background: var(--warning-orange);
+            width: 10px;
+            height: 10px;
+            animation-delay: 0.4s;
+        }
+
+        .confetti-piece:nth-child(4n) {
+            background: var(--error-red);
+            width: 8px;
+            height: 8px;
+            animation-delay: 0.6s;
+        }
+
+        .confetti-piece:nth-child(5n) {
+            background: #FFD700;
+            width: 16px;
+            height: 16px;
+            animation-delay: 0.8s;
+        }
+
+        .confetti-piece:nth-child(6n) {
+            background: #FF69B4;
+            width: 12px;
+            height: 4px;
+            animation-delay: 1s;
+        }
+
+        .confetti-piece:nth-child(7n) {
+            background: #00CED1;
+            width: 6px;
+            height: 14px;
+            animation-delay: 1.2s;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0.8;
+            }
         }
         
         /* Main Content */
@@ -710,13 +816,36 @@
             return JSON.parse(userData);
         }
         
+        // Calculate XP and level from completed lessons
+        function calculateXP(completedLessons) {
+            const totalXP = completedLessons.length * 50;
+            const level = Math.floor(totalXP / 100);
+            const currentXP = totalXP % 100;
+            
+            return {
+                level: level,
+                currentXP: currentXP,
+                progress: currentXP // percentage out of 100
+            };
+        }
+        
         // Update header for logged-in user
-        function updateHeaderForLoggedInUser(user) {
+        async function updateHeaderForLoggedInUser(user) {
             const authButtons = document.querySelector('.auth-buttons');
             
-            // Create user dropdown HTML
+            // Get completed lessons for XP calculation
+            const completedLessons = await fetchCompletedLessons();
+            const xpData = calculateXP(completedLessons);
+            
+            // Create user dropdown HTML with XP bar
             authButtons.innerHTML = `
                 <div class="user-menu">
+                    <div class="xp-container">
+                        <div class="xp-level">Level ${xpData.level}</div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" style="width: ${xpData.progress}%"></div>
+                        </div>
+                    </div>
                     <div class="user-icon" onclick="toggleUserDropdown()">
                         <span>👤</span>
                     </div>
@@ -729,6 +858,7 @@
             `;
             
             console.log('👤 Ažuriran header za ulogovanog korisnika:', user.email);
+            console.log('🎯 XP podaci:', xpData);
         }
         
         // Toggle user dropdown
@@ -820,9 +950,40 @@
             `;
         }
         
+        // Create confetti animation
+        function createConfetti() {
+            const confettiContainer = document.createElement('div');
+            confettiContainer.className = 'confetti';
+            confettiContainer.id = 'confettiContainer';
+            document.body.appendChild(confettiContainer);
+
+            // Create more confetti pieces for better visibility
+            for (let i = 0; i < 150; i++) {
+                const confettiPiece = document.createElement('div');
+                confettiPiece.className = 'confetti-piece';
+                confettiPiece.style.left = Math.random() * 100 + '%';
+                confettiPiece.style.animationDelay = Math.random() * 4 + 's';
+                confettiPiece.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                confettiContainer.appendChild(confettiPiece);
+            }
+
+            // Remove confetti after animation
+            setTimeout(() => {
+                if (confettiContainer.parentNode) {
+                    confettiContainer.parentNode.removeChild(confettiContainer);
+                }
+            }, 6000);
+        }
+        
         // Open lesson page
         function openLesson(lessonId) {
-            window.location.href = `lesson.html?id=${lessonId}`;
+            // Create confetti when opening a lesson
+            createConfetti();
+            
+            // Small delay before navigation for confetti to show
+            setTimeout(() => {
+                window.location.href = `lesson.html?id=${lessonId}`;
+            }, 500);
         }
         
         // Render lessons to the grid
@@ -1002,15 +1163,15 @@
         }
         
         // Initialize page
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', async () => {
             // Check authentication first
             const user = checkAuthentication();
             if (!user) {
                 return; // Will redirect to login
             }
             
-            // Update header with user info
-            updateHeaderForLoggedInUser(user);
+            // Update header with user info (async for XP calculation)
+            await updateHeaderForLoggedInUser(user);
             
             // Initialize search functionality
             initializeSearch();
