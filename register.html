@@ -731,15 +731,18 @@ Već imate nalog? <a href="login.html">Prijavite se</a>
                 const levels = ['', 'strength-weak', 'strength-fair', 'strength-good', 'strength-strong'];
                 const labels = ['', 'Slaba', 'Osrednja', 'Dobra', 'Jaka'];
                 
-                strengthFill.className = `strength-fill ${levels[strength]}`;
+                // Ensure we don't go out of bounds
+                const safeStrength = Math.min(strength, 4);
+                
+                strengthFill.className = `strength-fill ${levels[safeStrength]}`;
                 strengthFill.style.width = `${(strength / 5) * 100}%`;
                 
                 if (password.length === 0) {
                     strengthText.textContent = 'Jačina lozinke će se pojaviti ovde';
                 } else if (strength < 3) {
-                    strengthText.textContent = `${labels[strength]} - Dodajte ${feedback.join(', ')}`;
+                    strengthText.textContent = `${labels[safeStrength]} - Dodajte ${feedback.join(', ')}`;
                 } else {
-                    strengthText.textContent = `${labels[strength]} lozinka`;
+                    strengthText.textContent = `${labels[safeStrength]} lozinka`;
                 }
             }
             
@@ -834,7 +837,7 @@ Već imate nalog? <a href="login.html">Prijavite se</a>
             inputs.confirmPassword.addEventListener('input', function() {
                 if (this.value && inputs.password.value) {
                     if (this.value !== inputs.password.value) {
-                        showError('confirmPassword', 'Passwords do not match');
+                        showError('confirmPassword', 'Lozinke se ne poklapaju');
                     } else {
                         showSuccess('confirmPassword', 'Lozinke se poklapaju');
                     }
