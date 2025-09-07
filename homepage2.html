@@ -576,18 +576,19 @@
                     </div>
                     
                     <div class="lesson-list">
-                        <div class="lesson-item" onclick="goToLesson(1)">
+                        <div class="lesson-item" onclick="goToLesson(1)" data-lesson-id="1">
                             <div class="lesson-icon">📚</div>
                             <div class="lesson-info">
                                 <div class="lesson-title">Šta je finansijska pismenost i zašto ti treba?</div>
                                 <div class="lesson-meta">Lesson 1 • 15 min read</div>
                             </div>
                             <div class="lesson-progress">
-                                <div class="lesson-progress-fill" style="width: 60%"></div>
+                                <div class="lesson-progress-fill" style="width: 0%"></div>
                             </div>
+                            <div class="lesson-completion-icon" style="display: none; color: var(--success-green); font-size: 24px; margin-left: 10px;">✓</div>
                         </div>
                         
-                        <div class="lesson-item" onclick="goToLesson(2)">
+                        <div class="lesson-item" onclick="goToLesson(2)" data-lesson-id="2">
                             <div class="lesson-icon">💰</div>
                             <div class="lesson-info">
                                 <div class="lesson-title">Budžetiranje za početak karijere</div>
@@ -596,9 +597,10 @@
                             <div class="lesson-progress">
                                 <div class="lesson-progress-fill" style="width: 0%"></div>
                             </div>
+                            <div class="lesson-completion-icon" style="display: none; color: var(--success-green); font-size: 24px; margin-left: 10px;">✓</div>
                         </div>
                         
-                        <div class="lesson-item" onclick="goToLesson(3)">
+                        <div class="lesson-item" onclick="goToLesson(3)" data-lesson-id="3">
                             <div class="lesson-icon">📊</div>
                             <div class="lesson-info">
                                 <div class="lesson-title">Planiranje finansijskih ciljeva</div>
@@ -607,6 +609,7 @@
                             <div class="lesson-progress">
                                 <div class="lesson-progress-fill" style="width: 0%"></div>
                             </div>
+                            <div class="lesson-completion-icon" style="display: none; color: var(--success-green); font-size: 24px; margin-left: 10px;">✓</div>
                         </div>
                     </div>
                 </section>
@@ -649,6 +652,33 @@
                 return false;
             }
             return true;
+        }
+        
+        // Fetch completed lessons from API
+        async function fetchCompletedLessons() {
+            try {
+                const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+                if (!userData) return [];
+                
+                const user = JSON.parse(userData);
+                const response = await fetch(`http://localhost:8080/lessons/read/${user.email}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const completedLessons = await response.json();
+                console.log('✅ Fetched completed lessons:', completedLessons);
+                return completedLessons || [];
+            } catch (error) {
+                console.error('❌ Error fetching completed lessons:', error);
+                return [];
+            }
         }
         
         // Check if user is authenticated
@@ -703,6 +733,42 @@
             }
         });
         
+        // Mark completed lessons in the UI
+        async function markCompletedLessons() {
+            try {
+                const completedLessons = await fetchCompletedLessons();
+                const completedIds = completedLessons.map(lesson => lesson.id.toString());
+                
+                // Update lesson items on homepage
+                document.querySelectorAll('.lesson-item[data-lesson-id]').forEach(lessonItem => {
+                    const lessonId = lessonItem.getAttribute('data-lesson-id');
+                    const completionIcon = lessonItem.querySelector('.lesson-completion-icon');
+                    const progressFill = lessonItem.querySelector('.lesson-progress-fill');
+                    
+                    if (completedIds.includes(lessonId)) {
+                        // Show completion checkmark
+                        completionIcon.style.display = 'block';
+                        // Set progress to 100%
+                        progressFill.style.width = '100%';
+                        // Add completed styling
+                        lessonItem.style.opacity = '0.8';
+                        lessonItem.style.background = 'rgba(52, 199, 89, 0.05)';
+                    }
+                });
+                
+                // Update stats with real completed count
+                const completedCount = completedLessons.length;
+                const statNumber = document.querySelector('.stat-item .stat-number');
+                if (statNumber) {
+                    statNumber.textContent = completedCount.toString();
+                }
+                
+                console.log(`✅ Marked ${completedCount} lessons as completed on homepage`);
+            } catch (error) {
+                console.error('❌ Error marking completed lessons:', error);
+            }
+        }
+
         // Initialize dashboard
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is authenticated
@@ -725,6 +791,9 @@
                 const emailName = user.email.split('@')[0];
                 document.getElementById('welcomeName').textContent = emailName;
             }
+            
+            // Mark completed lessons
+            markCompletedLessons();
             
             // Add fade-in animations
             setTimeout(() => {

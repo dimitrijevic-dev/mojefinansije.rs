@@ -762,22 +762,59 @@
             window.location.href = 'login.html';
         }
         
+        // Fetch completed lessons from API
+        async function fetchCompletedLessons() {
+            try {
+                const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+                if (!userData) return [];
+                
+                const user = JSON.parse(userData);
+                const response = await fetch(`${API_BASE_URL}/lessons/read/${user.email}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const completedLessons = await response.json();
+                console.log('✅ Fetched completed lessons:', completedLessons);
+                return completedLessons || [];
+            } catch (error) {
+                console.error('❌ Error fetching completed lessons:', error);
+                return [];
+            }
+        }
+        
         // Create lesson card HTML
-        function createLessonCard(lesson, index) {
+        function createLessonCard(lesson, index, completedLessons = []) {
             const truncatedDescription = lesson.body ? 
                 lesson.body.substring(0, 120) + (lesson.body.length > 120 ? '...' : '') : 
                 'Opis nije dostupan';
             
+            const isCompleted = completedLessons.some(completed => completed.id === lesson.id);
+            const completionBadge = isCompleted ? 
+                `<div style="position: absolute; top: 10px; right: 10px; background: var(--success-green); color: white; border-radius: 50%; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 16px;">✓</div>` : 
+                '';
+            
+            const cardStyle = isCompleted ? 
+                'opacity: 0.8; background: rgba(52, 199, 89, 0.05); border: 2px solid rgba(52, 199, 89, 0.2);' : 
+                '';
+            
             return `
-                <div class="lesson-card fade-in" onclick="openLesson(${lesson.id})" style="animation-delay: ${index * 0.1}s">
+                <div class="lesson-card fade-in" onclick="openLesson(${lesson.id})" style="animation-delay: ${index * 0.1}s; position: relative; ${cardStyle}">
+                    ${completionBadge}
                     <div class="lesson-card-header">
-                        <div class="lesson-icon">📖</div>
-                        <div class="lesson-number">Predavanje ${lesson.id}</div>
+                        <div class="lesson-icon">${isCompleted ? '✅' : '📖'}</div>
+                        <div class="lesson-number">Predavanje ${lesson.id} ${isCompleted ? '(Završeno)' : ''}</div>
                     </div>
                     <h3 class="lesson-card-title">${lesson.title || 'Predavanje bez naziva'}</h3>
                     <p class="lesson-description">${truncatedDescription}</p>
                     <div class="lesson-card-footer">
-                        <div class="lesson-arrow">→</div>
+                        <div class="lesson-arrow" style="${isCompleted ? 'background: rgba(52, 199, 89, 0.1); color: var(--success-green);' : ''}">${isCompleted ? '✓' : '→'}</div>
                     </div>
                 </div>
             `;
@@ -789,7 +826,7 @@
         }
         
         // Render lessons to the grid
-        function renderLessons(lessons) {
+        async function renderLessons(lessons) {
             const lessonsGrid = document.getElementById('lessonsGrid');
             const emptyState = document.getElementById('emptyState');
             
@@ -799,9 +836,14 @@
                 return;
             }
             
+            // Fetch completed lessons
+            const completedLessons = await fetchCompletedLessons();
+            
             emptyState.style.display = 'none';
             lessonsGrid.style.display = 'grid';
-            lessonsGrid.innerHTML = lessons.map(createLessonCard).join('');
+            lessonsGrid.innerHTML = lessons.map((lesson, index) => 
+                createLessonCard(lesson, index, completedLessons)
+            ).join('');
             
             // Trigger fade-in animations
             setTimeout(() => {
