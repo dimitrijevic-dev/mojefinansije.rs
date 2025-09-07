@@ -415,6 +415,94 @@
             color: var(--warm-gray);
         }
         
+        /* XP System */
+        .xp-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-micro);
+        }
+        
+        .xp-level {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--apple-blue);
+        }
+        
+        .xp-bar {
+            width: 120px;
+            height: 12px;
+            background: var(--light-gray);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+        }
+        
+        .xp-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--apple-blue), var(--success-green));
+            border-radius: 6px;
+            transition: width 0.8s ease;
+        }
+        
+        /* User Menu */
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-medium);
+        }
+        
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+        }
+        
+        .user-icon:hover {
+            background: var(--apple-blue);
+            color: var(--system-white);
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--system-white);
+            border-radius: var(--radius-medium);
+            box-shadow: var(--shadow-large);
+            border: 1px solid var(--light-gray);
+            min-width: 200px;
+            z-index: 1000;
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: var(--spacing-medium);
+            color: var(--system-black);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--light-gray);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: var(--light-gray);
+            margin: 0;
+        }
+        
         /* FAQ Section */
         .faq-section {
             margin-top: var(--spacing-xxxl);
@@ -742,20 +830,20 @@
             
             // Create user dropdown HTML with XP bar
             authButtons.innerHTML = `
-                <div class="user-menu" style="position: relative; display: flex; align-items: center; gap: var(--spacing-medium);">
-                    <div class="xp-container" style="display: flex; flex-direction: column; align-items: center; gap: var(--spacing-micro);">
-                        <div class="xp-level" style="font-size: 12px; font-weight: 600; color: var(--apple-blue);">Level ${xpData.level}</div>
-                        <div class="xp-bar" style="width: 80px; height: 8px; background: var(--light-gray); border-radius: 4px; overflow: hidden; border: 1px solid rgba(0, 122, 255, 0.2);">
-                            <div class="xp-fill" style="height: 100%; background: linear-gradient(90deg, var(--apple-blue), var(--success-green)); border-radius: 4px; transition: width 0.8s ease; width: ${xpData.progress}%;"></div>
+                <div class="user-menu">
+                    <div class="xp-container">
+                        <div class="xp-level">Level ${xpData.level}</div>
+                        <div class="xp-bar">
+                            <div class="xp-fill" style="width: ${xpData.progress}%"></div>
                         </div>
                     </div>
-                    <div class="user-icon" onclick="toggleUserDropdown()" style="width: 40px; height: 40px; background: var(--light-gray); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s ease; font-size: 18px;">
+                    <div class="user-icon" onclick="toggleUserDropdown()">
                         <span>👤</span>
                     </div>
-                    <div class="user-dropdown" id="userDropdown" style="position: absolute; top: 100%; right: 0; margin-top: 8px; background: var(--system-white); border-radius: var(--radius-medium); box-shadow: var(--shadow-large); border: 1px solid var(--light-gray); min-width: 200px; z-index: 1000; display: none;">
-                        <a href="profile.html" class="dropdown-item" style="display: block; padding: var(--spacing-medium); color: var(--system-black); text-decoration: none; font-size: 14px; transition: background 0.2s ease;">Korisnički profil</a>
-                        <div class="dropdown-divider" style="height: 1px; background: var(--light-gray); margin: 0;"></div>
-                        <a href="#" class="dropdown-item" onclick="logout()" style="display: block; padding: var(--spacing-medium); color: var(--system-black); text-decoration: none; font-size: 14px; transition: background 0.2s ease;">Odjavi se</a>
+                    <div class="user-dropdown" id="userDropdown" style="display: none;">
+                        <a href="profile.html" class="dropdown-item">Korisnički profil</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="logout()">Odjavi se</a>
                     </div>
                 </div>
             `;
