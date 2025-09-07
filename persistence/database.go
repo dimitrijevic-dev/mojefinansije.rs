@@ -55,7 +55,7 @@ func Start() {
 
 func GetAll() []Lesson {
 	var lessons []Lesson
-	query := `SELECT * FROM lessons`
+	query := `SELECT * FROM lessons ORDER BY id ASC`
 
 	err := pgxscan.Select(context.Background(), conn, &lessons, query)
 	if err != nil {
