@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Vežbajte sa karticama za finansijsku pismenost - MojeFinansije">
+    <meta name="keywords" content="flashcards, kartice, finansijska pismenost, vežbanje, edukacija">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Kartice za vežbanje - MojeFinansije">
+    <meta property="og:description" content="Vežbajte gradivo pomoću interaktivnih kartica">
+    <meta property="og:image" content="https://mojefinansije.rs/og-image.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Kartice za vežbanje - MojeFinansije">
+    <meta name="twitter:description" content="Vežbajte gradivo pomoću interaktivnih kartica">
+    <meta name="twitter:image" content="https://mojefinansije.rs/twitter-image.jpg">
+    
+    <title>Kartice za vežbanje - MojeFinansije</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" as="style">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables - Apple-Inspired Design System */
+        :root {
+            /* Colors */
+            --mocha-mousse: #A0826D;
+            --system-black: #000000;
+            --system-white: #FFFFFF;
+            --apple-blue: #007AFF;
+            --warm-gray: #8E8E93;
+            --light-gray: #F2F2F7;
+            --success-green: #34C759;
+            --warning-orange: #FF9500;
+            --error-red: #FF3B30;
+            
+            /* Spacing - 8pt Grid */
+            --spacing-micro: 4px;
+            --spacing-small: 8px;
+            --spacing-medium: 16px;
+            --spacing-large: 24px;
+            --spacing-xl: 32px;
+            --spacing-xxl: 48px;
+            --spacing-xxxl: 64px;
+            
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            
+            /* Shadows */
+            --shadow-small: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --shadow-large: 0 16px 64px rgba(0, 0, 0, 0.15);
+            
+            /* Border Radius */
+            --radius-small: 8px;
+            --radius-medium: 12px;
+            --radius-large: 16px;
+            --radius-xl: 24px;
+        }
+        
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--system-black);
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        /* Skip Link for Accessibility */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--system-black);
+            color: var(--system-white);
+            padding: var(--spacing-small);
+            text-decoration: none;
+            z-index: 1000;
+            border-radius: var(--radius-small);
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-large);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--apple-blue);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--spacing-xl);
+            align-items: center;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--system-black);
+            font-weight: 500;
+            transition: color 0.2s ease;
+            position: relative;
+        }
+        
+        .nav-links a:hover {
+            color: var(--apple-blue);
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--apple-blue);
+            transition: width 0.2s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: var(--spacing-medium);
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--radius-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--system-black);
+            border: 1px solid var(--warm-gray);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--light-gray);
+            border-color: var(--apple-blue);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--apple-blue), #0056CC);
+            color: var(--system-white);
+            box-shadow: 0 4px 14px rgba(0, 122, 255, 0.25);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.35);
+        }
+        
+        /* User Menu */
+        .user-menu {
+            position: relative;
+        }
+        
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 18px;
+        }
+        
+        .user-icon:hover {
+            background: var(--apple-blue);
+            color: var(--system-white);
+        }
+        
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--system-white);
+            border-radius: var(--radius-medium);
+            box-shadow: var(--shadow-large);
+            border: 1px solid var(--light-gray);
+            min-width: 200px;
+            z-index: 1000;
+        }
+        
+        .user-info {
+            padding: var(--spacing-medium);
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--system-black);
+        }
+        
+        .dropdown-divider {
+            height: 1px;
+            background: var(--light-gray);
+            margin: 0;
+        }
+        
+        .dropdown-item {
+            display: block;
+            padding: var(--spacing-medium);
+            color: var(--system-black);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s ease;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--light-gray);
+        }
+        
+        /* Main Content */
+        .main {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-medium) var(--spacing-large);
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+            margin-bottom: var(--spacing-xl);
+            font-size: 14px;
+            color: var(--warm-gray);
+        }
+        
+        .breadcrumb a {
+            color: var(--apple-blue);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+        
+        .breadcrumb a:hover {
+            color: #0056CC;
+            text-decoration: underline;
+        }
+        
+        .breadcrumb-separator {
+            color: var(--warm-gray);
+            margin: 0 var(--spacing-small);
+        }
+        
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: var(--spacing-large);
+        }
+        
+        .page-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--spacing-medium);
+            background: linear-gradient(135deg, var(--system-black) 0%, var(--apple-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--warm-gray);
+            max-width: 600px;
+            margin: 0 auto var(--spacing-medium);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-small);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            color: var(--apple-blue);
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-medium);
+            text-decoration: none;
+            border: 1px solid rgba(0, 122, 255, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: var(--spacing-medium);
+        }
+        
+        .back-button:hover {
+            background: rgba(0, 122, 255, 0.1);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+        
+        /* Flashcards Container */
+        .flashcards-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .flashcard-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-medium);
+            margin-bottom: var(--spacing-medium);
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            padding: var(--spacing-medium);
+            border-radius: var(--radius-medium);
+            box-shadow: var(--shadow-small);
+            text-align: center;
+            min-width: 120px;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--apple-blue);
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: var(--warm-gray);
+            margin-top: var(--spacing-micro);
+        }
+        
+        /* Flashcard */
+        .flashcard {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-large);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            margin-bottom: var(--spacing-medium);
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .flashcard.flipped {
+            transform: rotateY(180deg) rotateY(-180deg) scaleX(-1);
+        }
+        
+        .flashcard.sliding-left {
+            transform: translateX(-100%) rotateY(-15deg);
+            opacity: 0;
+        }
+        
+        .flashcard.sliding-right {
+            transform: translateX(100%) rotateY(15deg);
+            opacity: 0;
+        }
+        
+        .flashcard-side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: var(--spacing-xl);
+            justify-content: center;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+        
+        .flashcard-front {
+            z-index: 2;
+        }
+        
+        .flashcard-back {
+            background: linear-gradient(135deg, rgba(0, 122, 255, 0.05), rgba(52, 199, 89, 0.05));
+            opacity: 0;
+            z-index: 1;
+        }
+        
+        .flashcard.flipped .flashcard-front {
+            opacity: 0;
+        }
+        
+        .flashcard.flipped .flashcard-back {
+            opacity: 1;
+        }
+        
+        .flashcard.flipped .flashcard-back .flashcard-content {
+            transform: scaleX(-1);
+        }
+        
+        .flashcard-content {
+            font-size: 20px;
+            line-height: 1.6;
+            color: var(--system-black);
+        }
+        
+        .flashcard-question {
+            font-weight: 600;
+            margin-bottom: var(--spacing-medium);
+        }
+        
+        .flashcard-answer {
+            color: var(--apple-blue);
+            font-weight: 500;
+        }
+        
+        .flashcard-hint {
+            position: absolute;
+            bottom: var(--spacing-large);
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: var(--warm-gray);
+            opacity: 0.7;
+        }
+        
+        /* Controls */
+        .flashcard-controls {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-medium);
+            margin-bottom: var(--spacing-medium);
+        }
+        
+        .control-btn {
+            padding: 16px 24px;
+            border-radius: var(--radius-medium);
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-small);
+        }
+        
+        .btn-know {
+            background: linear-gradient(135deg, var(--success-green), #28A745);
+            color: var(--system-white);
+            box-shadow: 0 4px 14px rgba(52, 199, 89, 0.25);
+        }
+        
+        .btn-know:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 199, 89, 0.35);
+        }
+        
+        .btn-dont-know {
+            background: linear-gradient(135deg, var(--error-red), #DC2626);
+            color: var(--system-white);
+            box-shadow: 0 4px 14px rgba(255, 59, 48, 0.25);
+        }
+        
+        .btn-dont-know:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 59, 48, 0.35);
+        }
+        
+        .btn-flip {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            color: var(--apple-blue);
+            border: 1px solid rgba(0, 122, 255, 0.2);
+        }
+        
+        .btn-flip:hover {
+            background: rgba(0, 122, 255, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Progress Bar */
+        .progress-container {
+            margin-bottom: var(--spacing-medium);
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-small);
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: var(--light-gray);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-green), var(--apple-blue));
+            border-radius: 4px;
+            transition: width 0.8s ease;
+        }
+        
+        /* Loading State */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+            font-size: 18px;
+            color: var(--warm-gray);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--light-gray);
+            border-radius: 50%;
+            border-top-color: var(--apple-blue);
+            animation: spin 1s ease-in-out infinite;
+            margin-right: var(--spacing-medium);
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Completion State */
+        .completion-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xxxl);
+            text-align: center;
+            box-shadow: var(--shadow-large);
+            border: 1px solid rgba(52, 199, 89, 0.2);
+        }
+        
+        .completion-icon {
+            font-size: 64px;
+            margin-bottom: var(--spacing-large);
+        }
+        
+        .completion-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-medium);
+            color: var(--success-green);
+        }
+        
+        .completion-message {
+            font-size: 16px;
+            color: var(--warm-gray);
+            margin-bottom: var(--spacing-xl);
+            line-height: 1.6;
+        }
+        
+        .completion-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--spacing-medium);
+            margin-bottom: var(--spacing-xl);
+        }
+        
+        .completion-stat {
+            background: rgba(52, 199, 89, 0.1);
+            padding: var(--spacing-medium);
+            border-radius: var(--radius-medium);
+        }
+        
+        .completion-stat-number {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--success-green);
+            display: block;
+        }
+        
+        .completion-stat-label {
+            font-size: 14px;
+            color: var(--warm-gray);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .container {
+                padding: var(--spacing-large) var(--spacing-medium);
+            }
+            
+            .flashcard-side {
+                padding: var(--spacing-xl);
+            }
+            
+            .flashcard-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .flashcard-stats {
+                gap: var(--spacing-medium);
+            }
+        }
+        
+        /* Focus Indicators */
+        button:focus,
+        a:focus {
+            outline: 2px solid var(--apple-blue);
+            outline-offset: 2px;
+        }
+        
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="#main-content" class="skip-link">Preskoči na glavni sadržaj</a>
+    
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav" role="navigation" aria-label="Glavna navigacija">
+            <a href="index.html" class="logo" aria-label="MojeFinansije Početna">
+                💰 MojeFinansije
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="homepage2.html">Početna</a></li>
+                <li><a href="lessons.html">Lekcije</a></li>
+            </ul>
+            
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-secondary" role="button">Prijavite se</a>
+                <a href="register.html" class="btn btn-primary" role="button">Registrujte se</a>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main id="main-content" class="main">
+        <div class="container">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb" aria-label="Navigacija">
+                <a href="index.html">Početna</a>
+                <span class="breadcrumb-separator">›</span>
+                <a href="#" id="lessonBreadcrumb">Lekcija</a>
+                <span class="breadcrumb-separator">›</span>
+                <span>Kartice za vežbanje</span>
+            </nav>
+            
+            <!-- Page Header -->
+            <div class="page-header">
+                <a href="#" class="back-button" id="backToLessonBtn">
+                    ← Nazad na lekciju
+                </a>
+                <h1 class="page-title">Kartice za vežbanje</h1>
+            </div>
+            
+            <!-- Loading State -->
+            <div id="loadingState" class="loading">
+                <div class="loading-spinner"></div>
+                Učitavaju se kartice...
+            </div>
+            
+            <!-- Flashcards Content -->
+            <div id="flashcardsContent" class="flashcards-container" style="display: none;">
+                <!-- Progress -->
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Napredak</span>
+                        <span id="progressText">0 od 0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <!-- Stats -->
+                <div class="flashcard-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="correctCount">0</span>
+                        <span class="stat-label">Tačno</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="incorrectCount">0</span>
+                        <span class="stat-label">Netačno</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="remainingCount">0</span>
+                        <span class="stat-label">Preostalo</span>
+                    </div>
+                </div>
+                
+                <!-- Current Flashcard -->
+                <div class="flashcard" id="currentFlashcard" onclick="flipCard()">
+                    <div class="flashcard-side flashcard-front">
+                        <div class="flashcard-content">
+                            <div class="flashcard-question" id="questionText">
+                                Loading question...
+                            </div>
+                        </div>
+                        <div class="flashcard-hint">Kliknite da vidite odgovor</div>
+                    </div>
+                    <div class="flashcard-side flashcard-back">
+                        <div class="flashcard-content">
+                            <div class="flashcard-answer" id="answerText">
+                                Loading answer...
+                            </div>
+                        </div>
+                        <div class="flashcard-hint">Kliknite da se vratite na pitanje</div>
+                    </div>
+                </div>
+                
+                <!-- Controls -->
+                <div class="flashcard-controls">
+                    <button class="control-btn btn-flip" onclick="flipCard()">
+                        🔄 Obrni karticu
+                    </button>
+                    <button class="control-btn btn-dont-know" onclick="markCard(false)">
+                        ❌ Ne znam
+                    </button>
+                    <button class="control-btn btn-know" onclick="markCard(true)">
+                        ✅ Znam
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Completion State -->
+            <div id="completionState" class="completion-card" style="display: none;">
+                <div class="completion-icon">🎉</div>
+                <h2 class="completion-title">Završili ste sve kartice!</h2>
+                <p class="completion-message">Odličan posao! Prošli ste kroz sve kartice za ovu lekciju.</p>
+                
+                <div class="completion-stats">
+                    <div class="completion-stat">
+                        <span class="completion-stat-number" id="finalCorrect">0</span>
+                        <span class="completion-stat-label">Tačnih odgovora</span>
+                    </div>
+                    <div class="completion-stat">
+                        <span class="completion-stat-number" id="finalIncorrect">0</span>
+                        <span class="completion-stat-label">Netačnih odgovora</span>
+                    </div>
+                    <div class="completion-stat">
+                        <span class="completion-stat-number" id="finalAccuracy">0%</span>
+                        <span class="completion-stat-label">Tačnost</span>
+                    </div>
+                </div>
+                
+                <div style="display: flex; gap: var(--spacing-medium); justify-content: center; flex-wrap: wrap;">
+                    <button class="control-btn btn-flip" onclick="restartFlashcards()">
+                        🔄 Ponovi kartice
+                    </button>
+                    <a href="#" class="control-btn btn-know" id="backToLessonFinal">
+                        ← Nazad na lekciju
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'http://localhost:8080';
+        
+        
+        // Game state
+        let currentCardIndex = 0;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let isFlipped = false;
+        let flashcards = [];
+        
+        // Check if user is authenticated
+        function checkAuthentication() {
+            const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+            const isLoggedIn = localStorage.getItem('isLoggedIn') || sessionStorage.getItem('isLoggedIn');
+            
+            if (!userData || !isLoggedIn || isLoggedIn !== 'true') {
+                console.log('🔒 Korisnik nije prijavljen, preusmeravanje na stranicu za prijavu');
+                window.location.href = 'login.html';
+                return false;
+            }
+            
+            return JSON.parse(userData);
+        }
+        
+        // Update header for logged-in user
+        function updateHeaderForLoggedInUser(user) {
+            const authButtons = document.querySelector('.auth-buttons');
+            
+            authButtons.innerHTML = `
+                <div class="user-menu">
+                    <div class="user-icon" onclick="toggleUserDropdown()">
+                        <span>👤</span>
+                    </div>
+                    <div class="user-dropdown" id="userDropdown" style="display: none;">
+                        <div class="user-info">
+                            <span class="user-name">${user.email}</span>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="logout()">Odjavi se</a>
+                    </div>
+                </div>
+            `;
+            
+            console.log('👤 Ažuriran header za prijavljenog korisnika:', user.email);
+        }
+        
+        // Toggle user dropdown
+        function toggleUserDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const userMenu = document.querySelector('.user-menu');
+            const dropdown = document.getElementById('userDropdown');
+            
+            if (userMenu && dropdown && !userMenu.contains(event.target)) {
+                dropdown.style.display = 'none';
+            }
+        });
+        
+        // Logout function
+        function logout() {
+            localStorage.removeItem('userData');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('rememberMe');
+            sessionStorage.removeItem('userData');
+            sessionStorage.removeItem('isLoggedIn');
+            
+            console.log('🔓 Korisnik se odjavio');
+            window.location.href = 'login.html';
+        }
+        
+        // Get lesson ID from URL parameters
+        function getLessonId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id') || '1';
+        }
+        
+        // Setup navigation buttons
+        function setupNavigation() {
+            const lessonId = getLessonId();
+            const backButtons = [document.getElementById('backToLessonBtn'), document.getElementById('backToLessonFinal')];
+            const lessonBreadcrumb = document.getElementById('lessonBreadcrumb');
+            
+            backButtons.forEach(btn => {
+                if (btn) {
+                    btn.href = `lesson.html?id=${lessonId}`;
+                }
+            });
+            
+            if (lessonBreadcrumb) {
+                lessonBreadcrumb.href = `lesson.html?id=${lessonId}`;
+                lessonBreadcrumb.textContent = `Lekcija ${lessonId}`;
+            }
+        }
+        
+        // Load flashcards from API
+        async function loadFlashcards() {
+            const lessonId = getLessonId();
+            const loadingState = document.getElementById('loadingState');
+            const flashcardsContent = document.getElementById('flashcardsContent');
+            
+            console.log('🃏 Loading flashcards for lesson:', lessonId);
+            
+            try {
+                loadingState.style.display = 'flex';
+                flashcardsContent.style.display = 'none';
+                
+                console.log('🌐 Fetching flashcards from API:', `${API_BASE_URL}/lessons/flashcards/${lessonId}`);
+                
+                // Fetch from API with a timeout
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 60000); // 60 second timeout
+                
+                const response = await fetch(`${API_BASE_URL}/lessons/flashcards/${lessonId}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    signal: controller.signal
+                });
+                
+                clearTimeout(timeoutId);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Raw API response:', data);
+                console.log('✅ Response type:', typeof data);
+                console.log('✅ Is array?', Array.isArray(data));
+                
+                // Handle the response format - expecting an array of objects with question and answer
+                let rawFlashcards = [];
+                
+                if (Array.isArray(data)) {
+                    rawFlashcards = data;
+                    console.log('📚 Found array of flashcards:', rawFlashcards.length);
+                } else if (data && typeof data === 'object' && Array.isArray(data.flashcards)) {
+                    rawFlashcards = data.flashcards;
+                    console.log('📚 Found nested flashcards array:', rawFlashcards.length);
+                } else if (data && typeof data === 'object') {
+                    // Try to find any array property that might contain flashcards
+                    const arrayProps = Object.keys(data).filter(key => Array.isArray(data[key]));
+                    if (arrayProps.length > 0) {
+                        rawFlashcards = data[arrayProps[0]];
+                        console.log('📚 Found flashcards in property:', arrayProps[0], rawFlashcards.length);
+                    }
+                }
+                
+                if (!Array.isArray(rawFlashcards) || rawFlashcards.length === 0) {
+                    console.error('❌ No valid flashcards found in response');
+                    throw new Error('No flashcards found for this lesson');
+                }
+                
+                console.log('📚 Processing', rawFlashcards.length, 'flashcards...');
+                
+                // Process and validate flashcard format
+                flashcards = rawFlashcards.map((card, index) => {
+                    console.log(`📝 Processing card ${index + 1}:`, card);
+                    
+                    return {
+                        id: index + 1,
+                        question: (card.question || '').toString().trim() || `Question ${index + 1}`,
+                        answer: (card.answer || '').toString().trim() || 'No answer provided'
+                    };
+                });
+                
+                console.log('✅ Processed flashcards:', flashcards);
+                
+                // Initialize the game
+                initializeFlashcards();
+                
+                loadingState.style.display = 'none';
+                flashcardsContent.style.display = 'block';
+                
+                console.log('✅ Flashcards loaded successfully:', flashcards.length, 'cards ready');
+                
+            } catch (error) {
+                console.error('❌ Error loading flashcards:', error);
+                
+                loadingState.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+                        <div style="font-size: 18px; margin-bottom: 8px;">Nije moguće učitati kartice</div>
+                        <div style="font-size: 14px; color: var(--warm-gray); margin-bottom: 16px;">
+                            ${error.message || 'Došlo je do problema prilikom učitavanja kartica za ovu lekciju.'}
+                        </div>
+                        <button class="control-btn btn-flip" onclick="loadFlashcards()" style="margin-top: 16px;">Pokušaj ponovo</button>
+                    </div>
+                `;
+            }
+        }
+        
+        // Initialize flashcards game
+        function initializeFlashcards() {
+            currentCardIndex = 0;
+            correctCount = 0;
+            incorrectCount = 0;
+            isFlipped = false;
+            
+            updateStats();
+            showCurrentCard();
+        }
+        
+        // Update statistics display
+        function updateStats() {
+            const totalCards = flashcards.length;
+            const completedCards = correctCount + incorrectCount;
+            const remaining = totalCards - completedCards;
+            const progress = totalCards > 0 ? (completedCards / totalCards) * 100 : 0;
+            
+            document.getElementById('correctCount').textContent = correctCount;
+            document.getElementById('incorrectCount').textContent = incorrectCount;
+            document.getElementById('remainingCount').textContent = remaining;
+            document.getElementById('progressText').textContent = `${completedCards} od ${totalCards}`;
+            document.getElementById('progressFill').style.width = `${progress}%`;
+        }
+        
+        // Show current flashcard
+        function showCurrentCard() {
+            if (currentCardIndex >= flashcards.length) {
+                showCompletion();
+                return;
+            }
+            
+            const currentCard = flashcards[currentCardIndex];
+            document.getElementById('questionText').textContent = currentCard.question;
+            document.getElementById('answerText').textContent = currentCard.answer;
+            
+            // Reset card to front side
+            const flashcard = document.getElementById('currentFlashcard');
+            flashcard.classList.remove('flipped');
+            isFlipped = false;
+        }
+        
+        // Flip card (always rotates regardless of state)
+        function flipCard() {
+            const flashcard = document.getElementById('currentFlashcard');
+            
+            if (isFlipped) {
+                flashcard.classList.remove('flipped');
+            } else {
+                flashcard.classList.add('flipped');
+            }
+            
+            isFlipped = !isFlipped;
+        }
+        
+        // Mark card as known or unknown
+        function markCard(isCorrect) {
+            const flashcard = document.getElementById('currentFlashcard');
+            
+            // Add sliding animation based on answer
+            if (isCorrect) {
+                correctCount++;
+                flashcard.classList.add('sliding-right');
+            } else {
+                incorrectCount++;
+                flashcard.classList.add('sliding-left');
+            }
+            
+            currentCardIndex++;
+            updateStats();
+            
+            // Move to next card after animation completes
+            setTimeout(() => {
+                // Remove animation classes
+                flashcard.classList.remove('sliding-left', 'sliding-right');
+                showCurrentCard();
+            }, 600);
+        }
+        
+        // Show completion state
+        function showCompletion() {
+            document.getElementById('flashcardsContent').style.display = 'none';
+            document.getElementById('completionState').style.display = 'block';
+            
+            const totalCards = flashcards.length;
+            const accuracy = totalCards > 0 ? Math.round((correctCount / totalCards) * 100) : 0;
+            
+            document.getElementById('finalCorrect').textContent = correctCount;
+            document.getElementById('finalIncorrect').textContent = incorrectCount;
+            document.getElementById('finalAccuracy').textContent = `${accuracy}%`;
+        }
+        
+        // Restart flashcards
+        function restartFlashcards() {
+            document.getElementById('completionState').style.display = 'none';
+            document.getElementById('flashcardsContent').style.display = 'block';
+            
+            initializeFlashcards();
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check authentication first
+            const user = checkAuthentication();
+            if (!user) {
+                return; // Will redirect to login
+            }
+            
+            // Update header with user info
+            updateHeaderForLoggedInUser(user);
+            
+            // Setup navigation
+            setupNavigation();
+            
+            // Load flashcards
+            loadFlashcards();
+        });
+    </script>
+</body>
+</html>
