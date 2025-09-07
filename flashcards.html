@@ -941,7 +941,83 @@
             }
         }
         
-        // Load flashcards from API
+        // Check for cached flashcards
+        function getCachedFlashcards(lessonId) {
+            try {
+                const cachedData = sessionStorage.getItem(`flashcards_${lessonId}`);
+                if (!cachedData) {
+                    return null;
+                }
+                
+                const parsed = JSON.parse(cachedData);
+                const now = Date.now();
+                const maxAge = 30 * 60 * 1000; // 30 minutes
+                
+                if (now - parsed.timestamp > maxAge) {
+                    console.log('🗑️ Cached flashcards expired, removing...');
+                    sessionStorage.removeItem(`flashcards_${lessonId}`);
+                    return null;
+                }
+                
+                if (parsed.lessonId === lessonId && parsed.flashcards) {
+                    console.log('⚡ Found cached flashcards:', parsed.flashcards.length || 'unknown count');
+                    return parsed.flashcards;
+                }
+                
+                return null;
+            } catch (error) {
+                console.warn('⚠️ Error reading cached flashcards:', error);
+                return null;
+            }
+        }
+        
+        // Process raw flashcard data into standard format
+        function processFlashcards(data) {
+            console.log('✅ Raw flashcard data:', data);
+            console.log('✅ Response type:', typeof data);
+            console.log('✅ Is array?', Array.isArray(data));
+            
+            // Handle the response format - expecting an array of objects with question and answer
+            let rawFlashcards = [];
+            
+            if (Array.isArray(data)) {
+                rawFlashcards = data;
+                console.log('📚 Found array of flashcards:', rawFlashcards.length);
+            } else if (data && typeof data === 'object' && Array.isArray(data.flashcards)) {
+                rawFlashcards = data.flashcards;
+                console.log('📚 Found nested flashcards array:', rawFlashcards.length);
+            } else if (data && typeof data === 'object') {
+                // Try to find any array property that might contain flashcards
+                const arrayProps = Object.keys(data).filter(key => Array.isArray(data[key]));
+                if (arrayProps.length > 0) {
+                    rawFlashcards = data[arrayProps[0]];
+                    console.log('📚 Found flashcards in property:', arrayProps[0], rawFlashcards.length);
+                }
+            }
+            
+            if (!Array.isArray(rawFlashcards) || rawFlashcards.length === 0) {
+                console.error('❌ No valid flashcards found in data');
+                throw new Error('No flashcards found for this lesson');
+            }
+            
+            console.log('📚 Processing', rawFlashcards.length, 'flashcards...');
+            
+            // Process and validate flashcard format
+            const processedCards = rawFlashcards.map((card, index) => {
+                console.log(`📝 Processing card ${index + 1}:`, card);
+                
+                return {
+                    id: index + 1,
+                    question: (card.question || '').toString().trim() || `Question ${index + 1}`,
+                    answer: (card.answer || '').toString().trim() || 'No answer provided'
+                };
+            });
+            
+            console.log('✅ Processed flashcards:', processedCards);
+            return processedCards;
+        }
+        
+        // Load flashcards from cache or API
         async function loadFlashcards() {
             const lessonId = getLessonId();
             const loadingState = document.getElementById('loadingState');
@@ -953,7 +1029,25 @@
                 loadingState.style.display = 'flex';
                 flashcardsContent.style.display = 'none';
                 
-                console.log('🌐 Fetching flashcards from API:', `${API_BASE_URL}/lessons/flashcards/${lessonId}`);
+                // First, check for cached flashcards
+                const cachedFlashcards = getCachedFlashcards(lessonId);
+                
+                if (cachedFlashcards) {
+                    console.log('⚡ Using cached flashcards - instant loading!');
+                    flashcards = processFlashcards(cachedFlashcards);
+                    
+                    // Initialize the game
+                    initializeFlashcards();
+                    
+                    loadingState.style.display = 'none';
+                    flashcardsContent.style.display = 'block';
+                    
+                    console.log('✅ Flashcards loaded from cache:', flashcards.length, 'cards ready');
+                    return;
+                }
+                
+                // If no cache, fetch from API
+                console.log('🌐 No cached data, fetching flashcards from API:', `${API_BASE_URL}/lessons/flashcards/${lessonId}`);
                 
                 // Fetch from API with a timeout
                 const controller = new AbortController();
@@ -974,47 +1068,16 @@
                 }
                 
                 const data = await response.json();
-                console.log('✅ Raw API response:', data);
-                console.log('✅ Response type:', typeof data);
-                console.log('✅ Is array?', Array.isArray(data));
+                flashcards = processFlashcards(data);
                 
-                // Handle the response format - expecting an array of objects with question and answer
-                let rawFlashcards = [];
-                
-                if (Array.isArray(data)) {
-                    rawFlashcards = data;
-                    console.log('📚 Found array of flashcards:', rawFlashcards.length);
-                } else if (data && typeof data === 'object' && Array.isArray(data.flashcards)) {
-                    rawFlashcards = data.flashcards;
-                    console.log('📚 Found nested flashcards array:', rawFlashcards.length);
-                } else if (data && typeof data === 'object') {
-                    // Try to find any array property that might contain flashcards
-                    const arrayProps = Object.keys(data).filter(key => Array.isArray(data[key]));
-                    if (arrayProps.length > 0) {
-                        rawFlashcards = data[arrayProps[0]];
-                        console.log('📚 Found flashcards in property:', arrayProps[0], rawFlashcards.length);
-                    }
-                }
-                
-                if (!Array.isArray(rawFlashcards) || rawFlashcards.length === 0) {
-                    console.error('❌ No valid flashcards found in response');
-                    throw new Error('No flashcards found for this lesson');
-                }
-                
-                console.log('📚 Processing', rawFlashcards.length, 'flashcards...');
-                
-                // Process and validate flashcard format
-                flashcards = rawFlashcards.map((card, index) => {
-                    console.log(`📝 Processing card ${index + 1}:`, card);
-                    
-                    return {
-                        id: index + 1,
-                        question: (card.question || '').toString().trim() || `Question ${index + 1}`,
-                        answer: (card.answer || '').toString().trim() || 'No answer provided'
-                    };
-                });
-                
-                console.log('✅ Processed flashcards:', flashcards);
+                // Cache the data for next time
+                const flashcardsData = {
+                    lessonId: lessonId,
+                    flashcards: data,
+                    timestamp: Date.now()
+                };
+                sessionStorage.setItem(`flashcards_${lessonId}`, JSON.stringify(flashcardsData));
+                console.log('💾 Flashcards cached for future use');
                 
                 // Initialize the game
                 initializeFlashcards();
@@ -1022,7 +1085,7 @@
                 loadingState.style.display = 'none';
                 flashcardsContent.style.display = 'block';
                 
-                console.log('✅ Flashcards loaded successfully:', flashcards.length, 'cards ready');
+                console.log('✅ Flashcards loaded from API:', flashcards.length, 'cards ready');
                 
             } catch (error) {
                 console.error('❌ Error loading flashcards:', error);

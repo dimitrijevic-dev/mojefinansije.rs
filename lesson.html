@@ -1166,6 +1166,41 @@
             console.log(`📈 Course progress: ${currentLesson}/${totalLessons} = ${progressPercent}%`);
         }
         
+        // Preload flashcards for current lesson
+        async function preloadFlashcards(lessonId) {
+            try {
+                console.log('🚀 Preloading flashcards for lesson:', lessonId);
+                
+                const response = await fetch(`${API_BASE_URL}/lessons/flashcards/${lessonId}`, {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                console.log('✅ Flashcards preloaded successfully:', data.length || 'unknown count');
+                
+                // Store flashcards in sessionStorage for quick access
+                const flashcardsData = {
+                    lessonId: lessonId,
+                    flashcards: data,
+                    timestamp: Date.now()
+                };
+                
+                sessionStorage.setItem(`flashcards_${lessonId}`, JSON.stringify(flashcardsData));
+                console.log('💾 Flashcards cached for instant access');
+                
+            } catch (error) {
+                console.warn('⚠️ Failed to preload flashcards:', error.message);
+                // Don't show error to user, just log it - flashcards page will handle the API call
+            }
+        }
+        
         // Update Next Lesson button URL
         function updateNextLessonButton(currentLessonId) {
             const nextLessonButton = document.getElementById('nextLessonButton');
@@ -1254,6 +1289,9 @@
                 
                 // Update course progress
                 updateCourseProgress(lessonId);
+                
+                // Preload flashcards in background
+                preloadFlashcards(lessonId);
                 
                 console.log('✨ Showing lesson content...');
                 
