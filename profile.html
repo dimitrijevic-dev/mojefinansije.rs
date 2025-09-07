@@ -646,6 +646,7 @@
             </a>
             
             <ul class="nav-links">
+                <li><a href="homepage2.html">Početna</a></li>
                 <li><a href="lessons.html">Lekcije</a></li>
                 <li><a href="lesson.html?id=3">Nastavi učenje</a></li>
                 <li><a href="lesson.html?id=3">EurekAI</a></li>
@@ -879,6 +880,67 @@
         }
         
         
+        // Get the first incomplete lesson ID
+        async function getFirstIncompleteLesson() {
+            try {
+                const [completedLessons, allLessons] = await Promise.all([
+                    fetchCompletedLessons(),
+                    fetchAllLessons()
+                ]);
+                
+                const completedIds = completedLessons.map(lesson => lesson.id);
+                const incompleteLessons = allLessons.filter(lesson => !completedIds.includes(lesson.id));
+                
+                return incompleteLessons.length > 0 ? incompleteLessons[0].id : 1;
+            } catch (error) {
+                console.error('❌ Error getting first incomplete lesson:', error);
+                return 1; // Default fallback
+            }
+        }
+        
+        // Fetch all lessons from search API
+        async function fetchAllLessons() {
+            try {
+                const response = await fetch('http://localhost:8080/lessons/search', {
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const lessons = await response.json();
+                return lessons || [];
+            } catch (error) {
+                console.error('❌ Error fetching lessons from search API:', error);
+                return [];
+            }
+        }
+        
+        // Update navigation with dynamic lesson links
+        async function updateNavigation() {
+            try {
+                const firstIncompleteId = await getFirstIncompleteLesson();
+                
+                // Update navigation bar links
+                const navLinks = document.querySelectorAll('.nav-links a');
+                navLinks.forEach(link => {
+                    if (link.textContent.includes('Nastavi učenje')) {
+                        link.href = `lesson.html?id=${firstIncompleteId}`;
+                    } else if (link.textContent.includes('EurekAI')) {
+                        link.href = `lesson.html?id=${firstIncompleteId}`;
+                    }
+                });
+                
+                console.log(`✅ Updated navigation to use lesson ${firstIncompleteId}`);
+            } catch (error) {
+                console.error('❌ Error updating navigation:', error);
+            }
+        }
+
         // Initialize page
         document.addEventListener('DOMContentLoaded', async () => {
             // Check authentication first
@@ -892,6 +954,9 @@
             
             // Load user profile
             await loadUserProfile(user);
+            
+            // Update navigation with dynamic links
+            await updateNavigation();
             
             // Add fade-in animation
             setTimeout(() => {
