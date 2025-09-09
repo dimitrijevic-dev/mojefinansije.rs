@@ -1,6 +1,6 @@
 # 🏆 mojefinansije.rs - Financial Literacy Education Platform
 
-**🥇 #1 Winner - FON HZS Hackathon 7.0**
+## 🥇 #1 Winner - FON HZS Hackathon 7.0
 
 [![Go Version](https://img.shields.io/badge/Go-1.25-00ADD8?style=flat-square&logo=go)](https://golang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-Database-3ECF8E?style=flat-square&logo=supabase)](https://supabase.com/)
@@ -66,62 +66,6 @@ mojefinansije.rs stands out as the premier financial education platform by combi
 - **🔍 Content Recommendation Engine** - Personalized learning paths
 - **📝 Automated Content Generation** - AI-created flashcards and quizzes
 
-## 🏗️ Platform Architecture
-
-```
-mojefinansije.rs/
-├── main.go                    # Application entry point
-├── config/                    # Configuration management
-│   ├── config.go             # Environment and database config
-│   └── encryption.go         # Security and encryption utilities
-├── router/                    # HTTP routing and API endpoints
-│   └── server.go             # RESTful API handlers and middleware
-├── persistence/               # Data layer and database operations
-│   └── database.go           # CRUD operations and data models
-├── genai/                     # AI integration and services
-│   └── genai.go              # GPT-5 integration and prompt management
-├── frontend/                  # Web interface and user experience
-│   ├── lessons.html          # Interactive lesson viewer
-│   ├── profile.html          # User dashboard and progress
-│   ├── flashcards.html       # AI-generated study materials
-│   └── index.html            # Landing page and platform overview
-└── assets/                    # Static resources and media
-    ├── styles/               # CSS styling and themes
-    ├── scripts/              # JavaScript functionality
-    └── images/               # Platform graphics and icons
-```
-
-## 📊 Database Schema
-
-### **Users Table**
-- `email` (string) - Unique user identifier and login
-- `displayname` (string) - Public profile name
-- `password` (string) - SHA256 encrypted authentication
-- `level` (int) - Gamification level (1-100)
-- `xp_points` (int) - Experience points earned
-- `subscription_tier` (string) - Monetization level
-
-### **Lessons Table**
-- `id` (int8) - Unique lesson identifier
-- `title` (string) - Lesson title and topic
-- `body` (string) - Educational content and materials
-- `video_link` (string) - Embedded video URL
-- `difficulty` (string) - Beginner/Intermediate/Advanced
-- `xp_reward` (int) - Points awarded for completion
-
-### **User_Lessons Table**
-- `email` (string) - User identifier
-- `lessonid` (int) - Completed lesson reference
-- `completion_date` (timestamp) - When lesson was finished
-- `score` (float) - Performance rating (0-100%)
-
-### **Flashcards Table**
-- `id` (int8) - Unique flashcard identifier
-- `lesson_id` (int) - Associated lesson
-- `question` (string) - AI-generated question
-- `answer` (string) - Correct answer
-- `difficulty` (string) - Card complexity level
-
 ## 🚀 Performance & Scalability
 
 - **⚡ Sub-200ms Response Times** - Optimized database queries and caching
@@ -138,49 +82,6 @@ mojefinansije.rs/
 - **📚 Content Quality** - Professional-grade financial education materials
 - **🤖 AI Accuracy** - 98% user satisfaction with EurekaAI assistant responses
 - **🚀 Market Ready** - Production-ready platform with monetization strategy
-
-## 🌍 Vision & Mission
-
-**Mission:** Democratize financial education by making high-quality financial literacy accessible to everyone through innovative technology and personalized learning experiences.
-
-**Vision:** Become the leading global platform for financial education, empowering millions of users to make informed financial decisions and achieve financial independence.
-
-## 🚀 Getting Started
-
-### Prerequisites
-- Go 1.25 or later
-- PostgreSQL database (or Supabase account)
-- OpenAI API key with GPT-5 access
-
-### Quick Setup
-```bash
-# Clone the repository
-git clone https://github.com/dimitrijevic-dev/hzs.git
-cd hzs
-
-# Set up environment variables
-cp .env.example .env
-# Add your Supabase and OpenAI credentials
-
-# Run the application
-go run main.go
-
-# Visit http://localhost:8080
-```
-
-## 📄 License
-
-MIT License - see [LICENSE](LICENSE) for details.
-
-## 🤝 Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details on how to submit pull requests, report issues, and suggest improvements.
-
-## 📞 Contact & Support
-
-- **Website:** [mojefinansije.rs](https://mojefinansije.rs)
-- **Team:** FON HZS Hackathon Winners
-- **Support:** Contact us through the platform or GitHub issues
 
 ---
 
